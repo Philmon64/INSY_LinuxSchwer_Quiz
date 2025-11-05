@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;&lt;html lang="de"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Linux &amp; OS Fundamentals – Exam Prep Quiz&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>* { margin:0; padding:0; box-sizing:border-box; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji','Segoe UI Emoji';</p>
+<p class="p1"><span class="Apple-converted-space">           </span>background: linear-gradient(135deg,#1e3c72 0%, #2a5298 100%); min-height:100vh; padding:24px; color:#111; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.container { max-width: 1100px; margin:0 auto; background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.35); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header { background: linear-gradient(135deg,#1e3c72 0%, #2a5298 100%); color:#fff; padding:32px; text-align:center; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header h1 { font-size:28px; margin-bottom:6px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.header p { opacity:.95; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.progress { background:#f2f3f5; padding:20px 28px; border-bottom:1px solid #e5e7eb; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.bar { height:28px; width:100%; background:#e5e7eb; border-radius:999px; overflow:hidden; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.fill { height:100%; width:0%; background: linear-gradient(90deg,#22c55e 0%, #60a5fa 100%); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; transition:width .3s ease; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.stats { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.stat { background:#fff; border-radius:12px; padding:8px 14px; box-shadow:0 2px 10px rgba(0,0,0,.08); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.stat .label { font-size:12px; color:#6b7280; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.stat .value { font-size:18px; font-weight:700; color:#2563eb; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.content { padding:28px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.category-info { background:#f8fafc; border-left:4px solid #2563eb; border-radius:12px; padding:14px 16px; margin-bottom:18px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.question-card { background:#f8f9fb; border-radius:16px; padding:24px; box-shadow:0 6px 18px rgba(0,0,0,.08); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.q-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:16px; flex-wrap:wrap; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.q-num { background:#2563eb; color:#fff; padding:6px 12px; border-radius:999px; font-weight:700; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.q-tag { background:#7c3aed; color:#fff; padding:6px 12px; border-radius:999px; font-size:12px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.q-text { font-size:20px; margin-bottom:18px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.subtle { color:#6b7280; font-size:13px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.options { display:flex; flex-direction:column; gap:10px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.option { background:#fff; border:2px solid #e5e7eb; border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:all .2s ease; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.option:hover { border-color:#2563eb; transform: translateX(4px); box-shadow:0 6px 14px rgba(37,99,235,.18); }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.opt-letter { width:32px; height:32px; border-radius:999px; background:#2563eb; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.option.selected { background:#eef2ff; border-color:#2563eb; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.option.correct { background:#dcfce7; border-color:#16a34a; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.option.correct .opt-letter { background:#16a34a; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.option.wrong { background:#fee2e2; border-color:#dc2626; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.option.wrong .opt-letter { background:#dc2626; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.fill-wrap { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.blank { display:inline-block; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.blank input { padding:10px 12px; border:2px solid #e5e7eb; border-radius:10px; min-width:140px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.blank input.correct { background:#dcfce7; border-color:#16a34a; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.blank input.wrong { background:#fee2e2; border-color:#dc2626; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.explain { margin-top:14px; background:#fff; border-left:4px solid #2563eb; border-radius:10px; padding:12px 14px; display:none; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.explain.show { display:block; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.actions { display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.btn { padding:12px 22px; border:none; border-radius:999px; font-weight:700; cursor:pointer; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.primary { background:#2563eb; color:#fff; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.secondary { background:#6b7280; color:#fff; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.success { background:#16a34a; color:#fff; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.ghost { background:#f3f4f6; color:#111; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.result { background: linear-gradient(135deg,#2563eb 0%, #7c3aed 100%); color:#fff; text-align:center; padding:38px; border-radius:16px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.result h2 { font-size:32px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.result .score { font-size:56px; font-weight:900; margin:12px 0 18px; }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>.grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-top:16px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.tile { background:rgba(255,255,255,.18); padding:14px; border-radius:12px; }</p>
+<p class="p1"><span class="Apple-converted-space">    </span>@media (max-width: 768px) { .q-text { font-size:18px; } }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="container"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="header"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;Linux &amp; OS Fundamentals – Exam Prep Quiz&lt;/h1&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Schwieriges, komplettes Prüfungs-Quiz (SC/MC/R/F/Lückentext). Viel Erfolg! 💪&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="progress"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="bar"&gt;&lt;div id="fill" class="fill"&gt;0%&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="stats"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat"&gt;&lt;div class="label"&gt;Progress&lt;/div&gt;&lt;div id="progText" class="value"&gt;0/0&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat"&gt;&lt;div class="label"&gt;Correct&lt;/div&gt;&lt;div id="correct" class="value" style="color:#16a34a"&gt;0&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat"&gt;&lt;div class="label"&gt;Wrong&lt;/div&gt;&lt;div id="wrong" class="value" style="color:#dc2626"&gt;0&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat"&gt;&lt;div class="label"&gt;Accuracy&lt;/div&gt;&lt;div id="acc" class="value"&gt;0%&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="content"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="quiz"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="actions"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="prev" class="btn secondary" style="display:none"&gt;◀ Zurück&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="check" class="btn ghost" style="display:none"&gt;Überprüfen ✅&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="next" class="btn primary"&gt;Weiter ▶&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="finish" class="btn success" style="display:none"&gt;✅ Abschließen&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1">&lt;script&gt;</p>
+<p class="p1">/*****************</p>
+<p class="p1"><span class="Apple-converted-space"> </span>* QUIZ DATEN</p>
+<p class="p1"><span class="Apple-converted-space"> </span>* Typen: 'sc' (Single Choice), 'mc' (Multiple Choice), 'tf' (R/F), 'fill' (Lückentext)</p>
+<p class="p1"><span class="Apple-converted-space"> </span>*****************/</p>
+<p class="p1">const QUESTIONS = [</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// --- SC/MC Teil A (1–45) ---</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:1,<span class="Apple-converted-space">  </span>type:'sc', q:'Was ist die primäre Aufgabe des Kernels?', opts:['Benutzeroberfläche bereitstellen','Hardware verwalten und Ressourcen zuteilen','Pakete installieren','Logs rotieren'], correct:[1], explain:'Der Kernel verwaltet Hardware/Ressourcen und bietet grundlegende OS-Dienste.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:2,<span class="Apple-converted-space">  </span>type:'sc', q:'Ein Betriebssystem ist „unsichtbar“, wenn …', opts:['es keinen Kernel hat','es als Embedded OS in Geräten läuft','es nur im RAM liegt','es keinen Bootloader braucht'], correct:[1], explain:'Embedded OS laufen z. B. in Autos, TVs, Kassen.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:3,<span class="Apple-converted-space">  </span>type:'mc', q:'Komponenten eines OS laut Notiz?', opts:['Kernel','Bootloader','Treiber/Dienste/Bibliotheken','Browser','Tools/Apps'], correct:[0,1,2,4], explain:'Browser ist nicht zwingender OS-Bestandteil.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:4,<span class="Apple-converted-space">  </span>type:'sc', q:'Ziel der OS-Abstraktion ist v. a. …', opts:['Hardware maximal auslasten','Komplexität der Hardware vor Nutzenden verstecken','GUI schneller starten','Logs minimieren'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:5,<span class="Apple-converted-space">  </span>type:'sc', q:'APT: Was macht „apt update“?', opts:['Pakete upgraden','Paketlisten aktualisieren','nicht benötigte Pakete entfernen','Distribution upgraden'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:6,<span class="Apple-converted-space">  </span>type:'sc', q:'APT: Welcher Befehl darf Pakete entfernen/hinzufügen?', opts:['apt upgrade','apt dist-upgrade','apt search','apt show'], correct:[1], explain:'„apt full-upgrade“ ist Synonym für „dist-upgrade“.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:7,<span class="Apple-converted-space">  </span>type:'sc', q:'Debian-Upgrade: Nach dem Ändern von bookworm→trixie folgt …', opts:['apt upgrade','apt update und dann apt full-upgrade','direkter Reboot','apt purge'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:8,<span class="Apple-converted-space">  </span>type:'mc', q:'Datei-INHALT anzeigen (nicht nur Namen):', opts:['ls -la','cat','less','head','pwd'], correct:[1,2,3]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:9,<span class="Apple-converted-space">  </span>type:'sc', q:'Warum ist „du“ i. d. R. langsamer als „df“?', opts:['Nutzt Netzwerk','Liest nur Superblock','Traversiert Dateibäume/alle Dateien','Hat höhere Priorität'], correct:[2]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:10, type:'sc', q:'Pflichtrechte für privaten SSH-Key?', opts:['400','600','644','700'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:11, type:'sc', q:'Security Groups (Standard):', opts:['Alles erlaubt','Nur ausgehend erlaubt','Alles blockiert (Regeln nötig)','Nur Port 22 offen'], correct:[2]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:12, type:'sc', q:'Floating IP ist …', opts:['interne RFC1918-Adresse','öffentliche, zwischen VMs verschiebbare IP','DHCP-Lease','IPv6 Link-Local'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:13, type:'sc', q:'Flavor beschreibt …', opts:['OS-Version','Kernel-Patchlevel','vCPU/RAM/Disk-Größe einer VM','Paketquelle'], correct:[2]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:14, type:'sc', q:'Debian-Status laut Notiz:', opts:['Bookworm: Stable, Trixie: Testing','Bookworm: Oldstable, Trixie: Stable','Bookworm: EOL, Trixie: Oldstable','Beide Stable'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:15, type:'sc', q:'Kernel 5.6+ ist relevant für …', opts:['cgroups v2','WireGuard im Kernel','Wayland','UnionFS'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:16, type:'sc', q:'WSL 2 bringt …', opts:['POSIX-Emulation ohne Kernel','einen echten Linux-Kernel via Hyper-V','reines Cygwin','Docker-Daemon im Userspace'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:17, type:'mc', q:'systemd ist PID 1 und …', opts:['startet/verwaltet Dienste','ersetzt den Bootloader','arbeitet mit Targets statt Runlevels','kann Timer (ersetzt viele Cron-Fälle)','ist auf BSD Standard'], correct:[0,2,3]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:18, type:'sc', q:'Boot-Reihenfolge (vereinfacht):', opts:['Bootloader → Firmware → Kernel → systemd','Firmware → Bootloader → Kernel+initramfs → systemd','Firmware → Kernel → Bootloader → systemd','Kernel → Firmware → Bootloader → systemd'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:19, type:'sc', q:'initramfs dient …', opts:['GUI-Treiber laden','temporäres Root im RAM, frühe Treiber &amp; Mount','Logrotation beim Boot','Timesync'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:20, type:'sc', q:'systemctl isolate multi-user.target …', opts:['fährt herunter','wechselt in Mehrbenutzer ohne GUI','aktiviert Autologin','löscht Dienste'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:21, type:'sc', q:'graphical.target ≈ Runlevel …', opts:['1','3','5','6'], correct:[2]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:22, type:'mc', q:'Prozesszustände (korrekt):', opts:['R = running/runnable','S = interruptible sleep','D = uninterruptible sleep (I/O-Wait)','Z = Zombie','T = Stopped'], correct:[0,1,2,3,4]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:23, type:'sc', q:'„Sauber beenden“ ist standardmäßig …', opts:['SIGINT (2)','SIGTERM (15)','SIGKILL (9)','SIGHUP (1)'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:24, type:'mc', q:'Kernel-Module (korrekt):', opts:['lsmod listet geladene Module','modprobe lädt inkl. Abhängigkeiten','insmod ist moderner als modprobe','Module liegen unter /lib/modules/$(uname -r)/','depmod -a erstellt Abhängigkeitslisten'], correct:[0,1,3,4]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:25, type:'sc', q:'Zeit &amp; NTP: Aktivierung via …', opts:['timedatectl set-ntp true','ntpdate now','hwclock --sync','date -s now'], correct:[0]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:26, type:'sc', q:'systemd-analyze blame zeigt …', opts:['CPU-Last pro Dienst','Boot-Dauer pro Dienst','Abhängigkeiten','Speicherverbrauch'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:27, type:'mc', q:'FHS – richtige Paare:', opts:['/etc – Konfigurationsdateien','/var – variable Daten/Logs','/usr – Nutzer-Homes','/dev – Gerätedateien','/bin – essenzielle Programme'], correct:[0,1,3,4]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:28, type:'sc', q:'Inodes enthalten NICHT …', opts:['Dateigröße &amp; Zeiten','Rechte &amp; Owner','Dateiname','Block-Pointer'], correct:[2]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:29, type:'sc', q:'Hardlink – korrekte Aussage:', opts:['Eigene Inode, über Partitionen','Gleiche Inode wie Original, gleiche Partition','Kann auf Verzeichnisse systemweit','Bricht beim Verschieben immer'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:30, type:'mc', q:'Sonderbits korrekt zugeordnet:', opts:['SUID = u+s = 4xxx','SGID = g+s = 2xxx','Sticky = +t = 1xxx','SGID auf Verzeichnis: neue Dateien erben Gruppe','Sticky: jeder kann alles löschen'], correct:[0,1,2,3]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:31, type:'sc', q:'umask 0022 → neue Dateien typ. …', opts:['666','644','600','755'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:32, type:'mc', q:'find – passende Beispiele:', opts:['find / -type f -size +10M','find /data -mtime -7','find /var -user root','find / -perm 644','find -iname ohne Pfad ist gültig'], correct:[0,1,2,3]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:33, type:'sc', q:'grep rekursiv &amp; case-insensitive:', opts:['grep -R "Text" .','grep -ri "Text" .','grep -I "Text" .','grep -rI "text"'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:34, type:'sc', q:'Warum ist df schneller?', opts:['Liest nur Dateisystem-Metadaten (Superblock)','Scannt nur /','Zählt nur RAM','Weil in C geschrieben'], correct:[0]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:35, type:'sc', q:'journalctl -u ssh.service -f …', opts:['zeigt Boot-Logs','folgt Live-Logs nur des SSH-Dienstes','durchsucht alle Logs','lädt Units neu'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:36, type:'mc', q:'Services steuern – korrekt:', opts:['systemctl restart ssh','systemctl enable ssh','systemctl reload ssh','service sshd start ist verpflichtend','systemctl status ssh.service'], correct:[0,1,2,4]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:37, type:'sc', q:'PXE bedeutet …', opts:['Boot von USB-Image','Boot über Netzwerk','Nur für UEFI gültig','Nur für Container'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:38, type:'sc', q:'shutdown -r now …', opts:['Hibernate','sofortiger Neustart','Neustart in 1 Minute','Herunterfahren ohne Netz'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:39, type:'mc', q:'Troubleshooting Netzwerk:', opts:['ip a – Interfaces/IPs','hostname -I – nur IP-Adressen','ping -c 4 8.8.8.8 – Routing/ICMP','ping -c 4 google.com – inkl. DNS','df -h – überprüft Sockets'], correct:[0,1,2,3]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:40, type:'sc', q:'chmod 755 script.sh ergibt …', opts:['rwxr-xr-x','rw-r--r--','rwxrwxrwx','rwxr-x---'], correct:[0]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:41, type:'sc', q:'Zombie-Prozess ist …', opts:['beendet, noch im Prozessbaum (nicht "gereapt")','uninterruptible sleep','gestoppter Prozess','Kernel-Thread'], correct:[0]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:42, type:'sc', q:'kill -9 &lt;PID&gt; soll …', opts:['immer zuerst','nur wenn SIGTERM nicht hilft','nur als root','niemals auf Servern'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:43, type:'sc', q:'pstree -p zeigt …', opts:['Dateirechte','Prozessbaum mit PIDs','Kernel-Module','Targets'], correct:[1]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:44, type:'sc', q:'systemd-timesyncd konfiguriert man in …', opts:['/etc/systemd/timesyncd.conf','/etc/ntp.conf','/etc/default/timesync','/var/lib/systemd/timesyncd'], correct:[0]},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:45, type:'mc', q:'Switch Engines – Praxis:', opts:['Instanzen im Internet werden schnell angegriffen → restriktive SGs','Floating IP für externen Zugriff','Volumes überleben VM-Löschung immer automatisch','Privaten SSH-Key nie hochladen','SSH-Key-Pair statt Passwort'], correct:[0,1,3,4]},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// --- Richtig/Falsch (46–55) ---</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:46, type:'tf', q:'apt full-upgrade ist Synonym zu apt dist-upgrade.', correctBool:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:47, type:'tf', q:'ls -la zeigt auch versteckte Dateien.', correctBool:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:48, type:'tf', q:'df sagt dir, welche Unterordner am meisten Platz brauchen.', correctBool:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:49, type:'tf', q:'which zeigt den Pfad eines Befehls.', correctBool:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:50, type:'tf', q:'modprobe ist älter und lädt keine Abhängigkeiten.', correctBool:false},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:51, type:'tf', q:'multi-user.target entspricht Runlevel 3.', correctBool:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:52, type:'tf', q:'Sticky-Bit verhindert in gemeinsamen Verzeichnissen das Löschen fremder Dateien.', correctBool:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:53, type:'tf', q:'uname -r zeigt die Kernel-Version.', correctBool:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:54, type:'tf', q:'journalctl -b zeigt Logs seit letztem Boot.', correctBool:true},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:55, type:'tf', q:'chmod 600 ~/.ssh/id_rsa ist für SSH verpflichtend.', correctBool:true},</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>// --- Lückentext (56–65) ---</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Hinweis: Im q-Text stehen „_______“ als Platzhalter; answers = Array von Arrays (zulässige Antworten je Feld)</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:56, type:'fill', q:'Boot-Kette: _______ → Bootloader → _______ (+initramfs) → _______ (PID 1).',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['firmware','bios','uefi'], ['kernel'], ['systemd']], explain:'Firmware/BIOS/UEFI → Kernel(+initramfs) → systemd.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:57, type:'fill', q:'df -h zeigt freien Speicher pro _______; du -h die Nutzung pro _______.',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['dateisystem','filesystem'], ['datei','verzeichnis','dateien','verzeichnisse','datei/verzeichnis','ordner']], explain:'df = Dateisysteme; du = Dateien/Verzeichnisse.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:58, type:'fill', q:'systemd arbeitet mit _______ (anstatt Runlevels).',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['targets']], explain:'Targets statt Runlevel.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:59, type:'fill', q:'SUID entspricht dem Oktal-Präfix _______; SGID _______; Sticky _______.',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['4xxx','4xxx.','4xxx '], ['2xxx','2xxx.','2xxx '], ['1xxx','1xxx.','1xxx ']], explain:'SUID=4xxx, SGID=2xxx, Sticky=1xxx.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:60, type:'fill', q:'Befehl zum Aktivieren von NTP via systemd: timedatectl _______ _______.',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['set-ntp'], ['true']], explain:'timedatectl set-ntp true'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:61, type:'fill', q:'find /var -type f -size +100M findet _______ Dateien größer als _______.',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['reguläre','regulaere','regular','normale'], ['100m','100mb','100 m','100 mb']], explain:'Reguläre Dateien &gt; 100 MB.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:62, type:'fill', q:'Inodes enthalten nicht den _______.',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['dateinamen','dateiname','name']], explain:'Dateiname steht im Verzeichnis-Eintrag, nicht im Inode.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:63, type:'fill', q:'journalctl -u ssh.service -f zeigt die _______-Logs des SSH-Dienstes in _______.',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['service','dienst'], ['echtzeit','live','realtime']], explain:'Service-Logs in Echtzeit.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:64, type:'fill', q:'In Switch Engines ist die Default-Policy der Security Groups: _______.',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['alles blockiert','default deny','deny all','standard: alles blockiert']], explain:'Standard ist „alles blockiert“.'},</p>
+<p class="p1"><span class="Apple-converted-space">  </span>{id:65, type:'fill', q:'systemd-analyze _______ &gt; boot.svg erstellt eine grafische Boot-Darstellung.',<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>answers:[['plot']], explain:'systemd-analyze plot &gt; boot.svg'}</p>
+<p class="p1">];</p>
+<p class="p2"><br></p>
+<p class="p1">/*****************</p>
+<p class="p1"><span class="Apple-converted-space"> </span>* QUIZ ENGINE</p>
+<p class="p1"><span class="Apple-converted-space"> </span>*****************/</p>
+<p class="p1">let idx = 0;</p>
+<p class="p1">let answers = new Array(QUESTIONS.length).fill(null); // store user answers</p>
+<p class="p1">let correct = 0, wrong = 0;</p>
+<p class="p2"><br></p>
+<p class="p1">const quizEl = document.getElementById('quiz');</p>
+<p class="p1">const prevBtn = document.getElementById('prev');</p>
+<p class="p1">const nextBtn = document.getElementById('next');</p>
+<p class="p1">const finishBtn = document.getElementById('finish');</p>
+<p class="p1">const checkBtn = document.getElementById('check');</p>
+<p class="p1">const fill = document.getElementById('fill');</p>
+<p class="p1">const progText = document.getElementById('progText');</p>
+<p class="p1">const correctEl = document.getElementById('correct');</p>
+<p class="p1">const wrongEl = document.getElementById('wrong');</p>
+<p class="p1">const accEl = document.getElementById('acc');</p>
+<p class="p2"><br></p>
+<p class="p1">function updateProgress(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const done = answers.filter(a=&gt;a!==null).length;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const pct = Math.round((done/QUESTIONS.length)*100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>fill.style.width = pct+"%"; fill.textContent = pct+"%";</p>
+<p class="p1"><span class="Apple-converted-space">  </span>progText.textContent = `${done}/${QUESTIONS.length}`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>correctEl.textContent = correct; wrongEl.textContent = wrong;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const acc = done? Math.round((correct/done)*100) : 0; accEl.textContent = acc+"%";</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function tagOf(q){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='sc') return 'Single Choice';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='mc') return 'Multiple Choice';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='tf') return 'Richtig/Falsch';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='fill') return 'Lückentext';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return '';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function render(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const q = QUESTIONS[idx];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const user = answers[idx];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let html = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question-card"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="q-head"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="q-num"&gt;Frage ${idx+1}/${QUESTIONS.length}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="q-tag"&gt;${tagOf(q)}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="q-text"&gt;${q.q}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='sc' || q.type==='tf'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const opts = q.type==='tf' ? ['Richtig','Falsch'] : q.opts;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const correctIndex = q.type==='tf' ? (q.correctBool?0:1) : q.correct[0];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="options"&gt;` + opts.map((txt,i)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const chosen = user?.choice===i;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const answered = user!==null;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let cls = 'option';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(answered){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(i===correctIndex) cls += ' correct';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(chosen &amp;&amp; i!==correctIndex) cls += ' wrong';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(chosen &amp;&amp; i===correctIndex) cls += ' selected';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>} else if(chosen){ cls += ' selected'; }</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return `</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="${cls}" data-i="${i}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="opt-letter"&gt;${String.fromCharCode(65+i)}&lt;/div&gt;&lt;div&gt;${txt}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}).join('') + `&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="explain ${user!==null?'show':''}"&gt;${ q.explain ? q.explain : '' }&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>quizEl.innerHTML = html + `&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.option').forEach(opt=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>opt.addEventListener('click',()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(answers[idx]!==null) return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const i = parseInt(opt.dataset.i);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const isCorrect = i === correctIndex;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>answers[idx] = {choice:i, correct:isCorrect};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(isCorrect) correct++; else wrong++;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>updateButtons();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>updateProgress();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else if(q.type==='mc'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const chosen = user?.choices || [];</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="subtle"&gt;Mehrere Antworten möglich. Markiere alle korrekten Optionen und klicke „Überprüfen“.&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="options"&gt;` + q.opts.map((txt,i)=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const isSelected = chosen.includes(i);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let cls = 'option' + (isSelected?' selected':'');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// if answered, paint correctness</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(user &amp;&amp; user.answered){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const isCorrectOpt = q.correct.includes(i);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(isCorrectOpt) cls += ' correct';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(isSelected &amp;&amp; !isCorrectOpt) cls += ' wrong';</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>return `</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="${cls}" data-i="${i}"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="opt-letter"&gt;${String.fromCharCode(65+i)}&lt;/div&gt;&lt;div&gt;${txt}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}).join('') + `&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="explain ${user&amp;&amp;user.answered?'show':''}"&gt;${ q.explain ? q.explain : '' }&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>quizEl.innerHTML = html + `&lt;/div&gt;`;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.option').forEach(opt=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">      </span>opt.addEventListener('click',()=&gt;{</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(user &amp;&amp; user.answered) return;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const i = parseInt(opt.dataset.i);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const arr = answers[idx]?.choices ? [...answers[idx].choices] : [];</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const pos = arr.indexOf(i);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(pos&gt;=0) arr.splice(pos,1); else arr.push(i);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>answers[idx] = {choices:arr};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>render();</p>
+<p class="p1"><span class="Apple-converted-space">      </span>});</p>
+<p class="p1"><span class="Apple-converted-space">    </span>});</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else if(q.type==='fill'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>// Build inputs for each blank</p>
+<p class="p1"><span class="Apple-converted-space">    </span>const parts = q.q.split('_______');</p>
+<p class="p1"><span class="Apple-converted-space">    </span>let rendered = '';</p>
+<p class="p1"><span class="Apple-converted-space">    </span>for(let i=0;i&lt;parts.length;i++){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>rendered += parts[i];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(i &lt; parts.length-1){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const val = user?.fills ? user.fills[i] : '';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>rendered += `&lt;span class="blank"&gt;&lt;input type="text" data-blank="${i}" value="${val??''}" placeholder="Antwort ${i+1}" /&gt;&lt;/span&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html = html.replace(q.q, `&lt;div class="fill-wrap"&gt;${rendered}&lt;/div&gt;`);</p>
+<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="explain ${user&amp;&amp;user.answered?'show':''}"&gt;${ q.explain ? q.explain : '' }&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>quizEl.innerHTML = html + `&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateButtons();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>updateProgress();</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function arraysEqualAsSets(a,b){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(a.length!==b.length) return false;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const s = new Set(a);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>for(const x of b){ if(!s.has(x)) return false; }</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return true;</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function normalize(s){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>return (s??'').toString().toLowerCase().trim()</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.replace(/\s+/g,' ')</p>
+<p class="p1"><span class="Apple-converted-space">    </span>.replace(/[.+]$/,''); // toleranter für 4xxx. etc.</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function checkCurrent(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const q = QUESTIONS[idx];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(answers[idx]!==null &amp;&amp; (q.type==='sc'||q.type==='tf')) return; // already checked</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='mc'){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const chosen = answers[idx]?.choices || [];</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const isCorrect = arraysEqualAsSets(chosen, q.correct);</p>
+<p class="p1"><span class="Apple-converted-space">      </span>answers[idx] = {choices:chosen, answered:true, correct:isCorrect};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(isCorrect) correct++; else wrong++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>render(); updateButtons(); updateProgress();</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else if(q.type==='fill'){</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// collect inputs</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const inputs = Array.from(document.querySelectorAll('input[data-blank]'));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const fills = inputs.map(inp=&gt;normalize(inp.value));</p>
+<p class="p1"><span class="Apple-converted-space">      </span>let allCorrect = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// compare with allowed answers</p>
+<p class="p1"><span class="Apple-converted-space">      </span>for(let i=0;i&lt;q.answers.length;i++){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const allowed = q.answers[i].map(normalize);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ok = allowed.includes(fills[i]);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(!ok) allCorrect = false;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// mark UI</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(fills[i].length===0){ allCorrect=false; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>if(ok) inputs[i].classList.add('correct'); else inputs[i].classList.add('wrong');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>inputs[i].readOnly = true;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>answers[idx] = {fills, answered:true, correct:allCorrect};</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(allCorrect) correct++; else wrong++;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>// show correct solutions inline hint (append)</p>
+<p class="p1"><span class="Apple-converted-space">      </span>const expl = document.querySelector('.explain');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>if(expl){</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const solutions = q.answers.map(a=&gt;`&lt;code&gt;${a[0]}&lt;/code&gt;`).join(' • ');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>expl.innerHTML = (q.explain? q.explain+'&lt;br&gt;':'') + `&lt;div class="subtle"&gt;Musterlösungen: ${solutions}&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>expl.classList.add('show');</p>
+<p class="p1"><span class="Apple-converted-space">      </span>}</p>
+<p class="p1"><span class="Apple-converted-space">      </span>updateButtons(); updateProgress();<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">function updateButtons(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const q = QUESTIONS[idx];</p>
+<p class="p1"><span class="Apple-converted-space">  </span>prevBtn.style.display = idx&gt;0? 'inline-block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>finishBtn.style.display = answers.every(a=&gt;a!==null)? 'inline-block' : 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='mc' || q.type==='fill'){</p>
+<p class="p1"><span class="Apple-converted-space">    </span>checkBtn.style.display = (answers[idx]?.answered? 'none':'inline-block');</p>
+<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">    </span>checkBtn.style.display = 'none';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>}</p>
+<p class="p1"><span class="Apple-converted-space">  </span>// Next button always visible unless last and finished</p>
+<p class="p1"><span class="Apple-converted-space">  </span>nextBtn.style.display = (idx&lt;QUESTIONS.length-1)? 'inline-block' : (answers.every(a=&gt;a!==null)?'none':'inline-block');</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">prevBtn.addEventListener('click', ()=&gt;{ if(idx&gt;0){ idx--; render(); }});</p>
+<p class="p1">nextBtn.addEventListener('click', ()=&gt;{ if(idx&lt;QUESTIONS.length-1){ idx++; render(); }});</p>
+<p class="p1">finishBtn.addEventListener('click', showResult);</p>
+<p class="p1">checkBtn.addEventListener('click', checkCurrent);</p>
+<p class="p2"><br></p>
+<p class="p1">function showResult(){</p>
+<p class="p1"><span class="Apple-converted-space">  </span>const pct = Math.round((correct/QUESTIONS.length)*100);</p>
+<p class="p1"><span class="Apple-converted-space">  </span>let msg = pct&gt;=90? 'Excellent! 🎉' : pct&gt;=75? 'Great job! 🌟' : pct&gt;=60? 'Good effort 👍' : 'Keep practising 📚';</p>
+<p class="p1"><span class="Apple-converted-space">  </span>quizEl.innerHTML = `</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="result"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="font-size:64px;"&gt;${pct&gt;=90?'🏆':pct&gt;=75?'🌟':pct&gt;=60?'👍':'📚'}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;Quiz abgeschlossen&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="score"&gt;${pct}%&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;${msg}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="grid"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tile"&gt;&lt;div&gt;Fragen gesamt&lt;/div&gt;&lt;div style="font-size:22px;font-weight:800;"&gt;${QUESTIONS.length}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tile"&gt;&lt;div&gt;Korrekt&lt;/div&gt;&lt;div style="font-size:22px;font-weight:800; color:#bbf7d0;"&gt;${correct}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tile"&gt;&lt;div&gt;Falsch&lt;/div&gt;&lt;div style="font-size:22px;font-weight:800; color:#fecaca;"&gt;${wrong}&lt;/div&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn primary" style="margin-top:18px;" onclick="location.reload()"&gt;🔄 Neu starten&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>`;</p>
+<p class="p1"><span class="Apple-converted-space">  </span>prevBtn.style.display='none'; nextBtn.style.display='none'; finishBtn.style.display='none'; checkBtn.style.display='none';</p>
+<p class="p1">}</p>
+<p class="p2"><br></p>
+<p class="p1">// Init</p>
+<p class="p1">updateProgress();</p>
+<p class="p1">render();</p>
+<p class="p1">&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
