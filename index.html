@@ -1,426 +1,1014 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="de">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.1">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSY Übung 02 - Prüfungsvorbereitung Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            background: #f0f0f0;
+            padding: 20px 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e0e0e0;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .stat {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-label {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .quiz-content {
+            padding: 30px;
+        }
+
+        .category-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 12px 24px;
+            border: 2px solid #667eea;
+            background: white;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .category-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .category-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .question-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .question-number {
+            background: #667eea;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .category-tag {
+            background: #764ba2;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Stil für Multiple-Choice Optionen */
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: #667eea;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .option-letter {
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option.correct {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+
+        .option.correct .option-letter {
+            background: #28a745;
+        }
+
+        .option.wrong {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+
+        .option.wrong .option-letter {
+            background: #dc3545;
+        }
+        
+        /* Checkbox-Stil für MC-Fragen mit Mehrfachauswahl */
+        .option-checkbox {
+            position: absolute;
+            right: 20px;
+            width: 25px;
+            height: 25px;
+        }
+
+        /* Stil für Lückentext-Antworten */
+        .fill-in-the-blank-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .fill-in-the-blank-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: border-color 0.3s;
+        }
+
+        .fill-in-the-blank-input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .fill-in-the-blank-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fill-in-the-blank-label {
+            font-weight: bold;
+            color: #333;
+            min-width: 120px;
+        }
+
+        .answer-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .answer-section.show {
+            display: block;
+        }
+
+        .answer-section.hide {
+            display: none;
+        }
+
+        .answer-header {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .answer-text {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+
+        .result-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .result-summary h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .result-score {
+            font-size: 4em;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .result-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .result-detail {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .result-detail-value {
+            font-size: 2em;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #e0e0e0;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .question-text {
+                font-size: 1.1em;
+            }
+
+            .btn {
+                min-width: 100%;
+            }
+
+            .result-score {
+                font-size: 3em;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Visuelle Korrektur für Richtig/Falsch-Felder */
+        .fill-in-the-blank-input.correct-answer {
+            border-color: #28a745;
+            background-color: #d4edda;
+        }
+
+        .fill-in-the-blank-input.wrong-answer {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+        }
+    </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;&lt;html lang="de"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Linux &amp; OS Fundamentals – Exam Prep Quiz&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>* { margin:0; padding:0; box-sizing:border-box; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji','Segoe UI Emoji';</p>
-<p class="p1"><span class="Apple-converted-space">           </span>background: linear-gradient(135deg,#1e3c72 0%, #2a5298 100%); min-height:100vh; padding:24px; color:#111; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.container { max-width: 1100px; margin:0 auto; background:#fff; border-radius:20px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.35); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.header { background: linear-gradient(135deg,#1e3c72 0%, #2a5298 100%); color:#fff; padding:32px; text-align:center; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.header h1 { font-size:28px; margin-bottom:6px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.header p { opacity:.95; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.progress { background:#f2f3f5; padding:20px 28px; border-bottom:1px solid #e5e7eb; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.bar { height:28px; width:100%; background:#e5e7eb; border-radius:999px; overflow:hidden; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.fill { height:100%; width:0%; background: linear-gradient(90deg,#22c55e 0%, #60a5fa 100%); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; transition:width .3s ease; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.stats { display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.stat { background:#fff; border-radius:12px; padding:8px 14px; box-shadow:0 2px 10px rgba(0,0,0,.08); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.stat .label { font-size:12px; color:#6b7280; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.stat .value { font-size:18px; font-weight:700; color:#2563eb; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.content { padding:28px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.category-info { background:#f8fafc; border-left:4px solid #2563eb; border-radius:12px; padding:14px 16px; margin-bottom:18px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.question-card { background:#f8f9fb; border-radius:16px; padding:24px; box-shadow:0 6px 18px rgba(0,0,0,.08); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.q-head { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:16px; flex-wrap:wrap; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.q-num { background:#2563eb; color:#fff; padding:6px 12px; border-radius:999px; font-weight:700; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.q-tag { background:#7c3aed; color:#fff; padding:6px 12px; border-radius:999px; font-size:12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.q-text { font-size:20px; margin-bottom:18px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.subtle { color:#6b7280; font-size:13px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.options { display:flex; flex-direction:column; gap:10px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.option { background:#fff; border:2px solid #e5e7eb; border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:all .2s ease; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.option:hover { border-color:#2563eb; transform: translateX(4px); box-shadow:0 6px 14px rgba(37,99,235,.18); }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.opt-letter { width:32px; height:32px; border-radius:999px; background:#2563eb; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; flex-shrink:0; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.option.selected { background:#eef2ff; border-color:#2563eb; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.option.correct { background:#dcfce7; border-color:#16a34a; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.option.correct .opt-letter { background:#16a34a; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.option.wrong { background:#fee2e2; border-color:#dc2626; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.option.wrong .opt-letter { background:#dc2626; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.fill-wrap { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.blank { display:inline-block; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.blank input { padding:10px 12px; border:2px solid #e5e7eb; border-radius:10px; min-width:140px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.blank input.correct { background:#dcfce7; border-color:#16a34a; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.blank input.wrong { background:#fee2e2; border-color:#dc2626; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.explain { margin-top:14px; background:#fff; border-left:4px solid #2563eb; border-radius:10px; padding:12px 14px; display:none; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.explain.show { display:block; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.actions { display:flex; gap:12px; margin-top:18px; flex-wrap:wrap; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.btn { padding:12px 22px; border:none; border-radius:999px; font-weight:700; cursor:pointer; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.primary { background:#2563eb; color:#fff; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.secondary { background:#6b7280; color:#fff; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.success { background:#16a34a; color:#fff; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.ghost { background:#f3f4f6; color:#111; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.result { background: linear-gradient(135deg,#2563eb 0%, #7c3aed 100%); color:#fff; text-align:center; padding:38px; border-radius:16px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.result h2 { font-size:32px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.result .score { font-size:56px; font-weight:900; margin:12px 0 18px; }</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap:14px; margin-top:16px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.tile { background:rgba(255,255,255,.18); padding:14px; border-radius:12px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>@media (max-width: 768px) { .q-text { font-size:18px; } }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="header"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h1&gt;Linux &amp; OS Fundamentals – Exam Prep Quiz&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;Schwieriges, komplettes Prüfungs-Quiz (SC/MC/R/F/Lückentext). Viel Erfolg! 💪&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="progress"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="bar"&gt;&lt;div id="fill" class="fill"&gt;0%&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="stats"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat"&gt;&lt;div class="label"&gt;Progress&lt;/div&gt;&lt;div id="progText" class="value"&gt;0/0&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat"&gt;&lt;div class="label"&gt;Correct&lt;/div&gt;&lt;div id="correct" class="value" style="color:#16a34a"&gt;0&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat"&gt;&lt;div class="label"&gt;Wrong&lt;/div&gt;&lt;div id="wrong" class="value" style="color:#dc2626"&gt;0&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="stat"&gt;&lt;div class="label"&gt;Accuracy&lt;/div&gt;&lt;div id="acc" class="value"&gt;0%&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="content"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div id="quiz"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="actions"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="prev" class="btn secondary" style="display:none"&gt;◀ Zurück&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="check" class="btn ghost" style="display:none"&gt;Überprüfen ✅&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="next" class="btn primary"&gt;Weiter ▶&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;button id="finish" class="btn success" style="display:none"&gt;✅ Abschließen&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1">/*****************</p>
-<p class="p1"><span class="Apple-converted-space"> </span>* QUIZ DATEN</p>
-<p class="p1"><span class="Apple-converted-space"> </span>* Typen: 'sc' (Single Choice), 'mc' (Multiple Choice), 'tf' (R/F), 'fill' (Lückentext)</p>
-<p class="p1"><span class="Apple-converted-space"> </span>*****************/</p>
-<p class="p1">const QUESTIONS = [</p>
-<p class="p1"><span class="Apple-converted-space">  </span>// --- SC/MC Teil A (1–45) ---</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:1,<span class="Apple-converted-space">  </span>type:'sc', q:'Was ist die primäre Aufgabe des Kernels?', opts:['Benutzeroberfläche bereitstellen','Hardware verwalten und Ressourcen zuteilen','Pakete installieren','Logs rotieren'], correct:[1], explain:'Der Kernel verwaltet Hardware/Ressourcen und bietet grundlegende OS-Dienste.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:2,<span class="Apple-converted-space">  </span>type:'sc', q:'Ein Betriebssystem ist „unsichtbar“, wenn …', opts:['es keinen Kernel hat','es als Embedded OS in Geräten läuft','es nur im RAM liegt','es keinen Bootloader braucht'], correct:[1], explain:'Embedded OS laufen z. B. in Autos, TVs, Kassen.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:3,<span class="Apple-converted-space">  </span>type:'mc', q:'Komponenten eines OS laut Notiz?', opts:['Kernel','Bootloader','Treiber/Dienste/Bibliotheken','Browser','Tools/Apps'], correct:[0,1,2,4], explain:'Browser ist nicht zwingender OS-Bestandteil.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:4,<span class="Apple-converted-space">  </span>type:'sc', q:'Ziel der OS-Abstraktion ist v. a. …', opts:['Hardware maximal auslasten','Komplexität der Hardware vor Nutzenden verstecken','GUI schneller starten','Logs minimieren'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:5,<span class="Apple-converted-space">  </span>type:'sc', q:'APT: Was macht „apt update“?', opts:['Pakete upgraden','Paketlisten aktualisieren','nicht benötigte Pakete entfernen','Distribution upgraden'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:6,<span class="Apple-converted-space">  </span>type:'sc', q:'APT: Welcher Befehl darf Pakete entfernen/hinzufügen?', opts:['apt upgrade','apt dist-upgrade','apt search','apt show'], correct:[1], explain:'„apt full-upgrade“ ist Synonym für „dist-upgrade“.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:7,<span class="Apple-converted-space">  </span>type:'sc', q:'Debian-Upgrade: Nach dem Ändern von bookworm→trixie folgt …', opts:['apt upgrade','apt update und dann apt full-upgrade','direkter Reboot','apt purge'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:8,<span class="Apple-converted-space">  </span>type:'mc', q:'Datei-INHALT anzeigen (nicht nur Namen):', opts:['ls -la','cat','less','head','pwd'], correct:[1,2,3]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:9,<span class="Apple-converted-space">  </span>type:'sc', q:'Warum ist „du“ i. d. R. langsamer als „df“?', opts:['Nutzt Netzwerk','Liest nur Superblock','Traversiert Dateibäume/alle Dateien','Hat höhere Priorität'], correct:[2]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:10, type:'sc', q:'Pflichtrechte für privaten SSH-Key?', opts:['400','600','644','700'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:11, type:'sc', q:'Security Groups (Standard):', opts:['Alles erlaubt','Nur ausgehend erlaubt','Alles blockiert (Regeln nötig)','Nur Port 22 offen'], correct:[2]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:12, type:'sc', q:'Floating IP ist …', opts:['interne RFC1918-Adresse','öffentliche, zwischen VMs verschiebbare IP','DHCP-Lease','IPv6 Link-Local'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:13, type:'sc', q:'Flavor beschreibt …', opts:['OS-Version','Kernel-Patchlevel','vCPU/RAM/Disk-Größe einer VM','Paketquelle'], correct:[2]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:14, type:'sc', q:'Debian-Status laut Notiz:', opts:['Bookworm: Stable, Trixie: Testing','Bookworm: Oldstable, Trixie: Stable','Bookworm: EOL, Trixie: Oldstable','Beide Stable'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:15, type:'sc', q:'Kernel 5.6+ ist relevant für …', opts:['cgroups v2','WireGuard im Kernel','Wayland','UnionFS'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:16, type:'sc', q:'WSL 2 bringt …', opts:['POSIX-Emulation ohne Kernel','einen echten Linux-Kernel via Hyper-V','reines Cygwin','Docker-Daemon im Userspace'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:17, type:'mc', q:'systemd ist PID 1 und …', opts:['startet/verwaltet Dienste','ersetzt den Bootloader','arbeitet mit Targets statt Runlevels','kann Timer (ersetzt viele Cron-Fälle)','ist auf BSD Standard'], correct:[0,2,3]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:18, type:'sc', q:'Boot-Reihenfolge (vereinfacht):', opts:['Bootloader → Firmware → Kernel → systemd','Firmware → Bootloader → Kernel+initramfs → systemd','Firmware → Kernel → Bootloader → systemd','Kernel → Firmware → Bootloader → systemd'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:19, type:'sc', q:'initramfs dient …', opts:['GUI-Treiber laden','temporäres Root im RAM, frühe Treiber &amp; Mount','Logrotation beim Boot','Timesync'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:20, type:'sc', q:'systemctl isolate multi-user.target …', opts:['fährt herunter','wechselt in Mehrbenutzer ohne GUI','aktiviert Autologin','löscht Dienste'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:21, type:'sc', q:'graphical.target ≈ Runlevel …', opts:['1','3','5','6'], correct:[2]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:22, type:'mc', q:'Prozesszustände (korrekt):', opts:['R = running/runnable','S = interruptible sleep','D = uninterruptible sleep (I/O-Wait)','Z = Zombie','T = Stopped'], correct:[0,1,2,3,4]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:23, type:'sc', q:'„Sauber beenden“ ist standardmäßig …', opts:['SIGINT (2)','SIGTERM (15)','SIGKILL (9)','SIGHUP (1)'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:24, type:'mc', q:'Kernel-Module (korrekt):', opts:['lsmod listet geladene Module','modprobe lädt inkl. Abhängigkeiten','insmod ist moderner als modprobe','Module liegen unter /lib/modules/$(uname -r)/','depmod -a erstellt Abhängigkeitslisten'], correct:[0,1,3,4]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:25, type:'sc', q:'Zeit &amp; NTP: Aktivierung via …', opts:['timedatectl set-ntp true','ntpdate now','hwclock --sync','date -s now'], correct:[0]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:26, type:'sc', q:'systemd-analyze blame zeigt …', opts:['CPU-Last pro Dienst','Boot-Dauer pro Dienst','Abhängigkeiten','Speicherverbrauch'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:27, type:'mc', q:'FHS – richtige Paare:', opts:['/etc – Konfigurationsdateien','/var – variable Daten/Logs','/usr – Nutzer-Homes','/dev – Gerätedateien','/bin – essenzielle Programme'], correct:[0,1,3,4]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:28, type:'sc', q:'Inodes enthalten NICHT …', opts:['Dateigröße &amp; Zeiten','Rechte &amp; Owner','Dateiname','Block-Pointer'], correct:[2]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:29, type:'sc', q:'Hardlink – korrekte Aussage:', opts:['Eigene Inode, über Partitionen','Gleiche Inode wie Original, gleiche Partition','Kann auf Verzeichnisse systemweit','Bricht beim Verschieben immer'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:30, type:'mc', q:'Sonderbits korrekt zugeordnet:', opts:['SUID = u+s = 4xxx','SGID = g+s = 2xxx','Sticky = +t = 1xxx','SGID auf Verzeichnis: neue Dateien erben Gruppe','Sticky: jeder kann alles löschen'], correct:[0,1,2,3]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:31, type:'sc', q:'umask 0022 → neue Dateien typ. …', opts:['666','644','600','755'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:32, type:'mc', q:'find – passende Beispiele:', opts:['find / -type f -size +10M','find /data -mtime -7','find /var -user root','find / -perm 644','find -iname ohne Pfad ist gültig'], correct:[0,1,2,3]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:33, type:'sc', q:'grep rekursiv &amp; case-insensitive:', opts:['grep -R "Text" .','grep -ri "Text" .','grep -I "Text" .','grep -rI "text"'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:34, type:'sc', q:'Warum ist df schneller?', opts:['Liest nur Dateisystem-Metadaten (Superblock)','Scannt nur /','Zählt nur RAM','Weil in C geschrieben'], correct:[0]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:35, type:'sc', q:'journalctl -u ssh.service -f …', opts:['zeigt Boot-Logs','folgt Live-Logs nur des SSH-Dienstes','durchsucht alle Logs','lädt Units neu'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:36, type:'mc', q:'Services steuern – korrekt:', opts:['systemctl restart ssh','systemctl enable ssh','systemctl reload ssh','service sshd start ist verpflichtend','systemctl status ssh.service'], correct:[0,1,2,4]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:37, type:'sc', q:'PXE bedeutet …', opts:['Boot von USB-Image','Boot über Netzwerk','Nur für UEFI gültig','Nur für Container'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:38, type:'sc', q:'shutdown -r now …', opts:['Hibernate','sofortiger Neustart','Neustart in 1 Minute','Herunterfahren ohne Netz'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:39, type:'mc', q:'Troubleshooting Netzwerk:', opts:['ip a – Interfaces/IPs','hostname -I – nur IP-Adressen','ping -c 4 8.8.8.8 – Routing/ICMP','ping -c 4 google.com – inkl. DNS','df -h – überprüft Sockets'], correct:[0,1,2,3]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:40, type:'sc', q:'chmod 755 script.sh ergibt …', opts:['rwxr-xr-x','rw-r--r--','rwxrwxrwx','rwxr-x---'], correct:[0]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:41, type:'sc', q:'Zombie-Prozess ist …', opts:['beendet, noch im Prozessbaum (nicht "gereapt")','uninterruptible sleep','gestoppter Prozess','Kernel-Thread'], correct:[0]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:42, type:'sc', q:'kill -9 &lt;PID&gt; soll …', opts:['immer zuerst','nur wenn SIGTERM nicht hilft','nur als root','niemals auf Servern'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:43, type:'sc', q:'pstree -p zeigt …', opts:['Dateirechte','Prozessbaum mit PIDs','Kernel-Module','Targets'], correct:[1]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:44, type:'sc', q:'systemd-timesyncd konfiguriert man in …', opts:['/etc/systemd/timesyncd.conf','/etc/ntp.conf','/etc/default/timesync','/var/lib/systemd/timesyncd'], correct:[0]},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:45, type:'mc', q:'Switch Engines – Praxis:', opts:['Instanzen im Internet werden schnell angegriffen → restriktive SGs','Floating IP für externen Zugriff','Volumes überleben VM-Löschung immer automatisch','Privaten SSH-Key nie hochladen','SSH-Key-Pair statt Passwort'], correct:[0,1,3,4]},</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>// --- Richtig/Falsch (46–55) ---</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:46, type:'tf', q:'apt full-upgrade ist Synonym zu apt dist-upgrade.', correctBool:true},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:47, type:'tf', q:'ls -la zeigt auch versteckte Dateien.', correctBool:true},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:48, type:'tf', q:'df sagt dir, welche Unterordner am meisten Platz brauchen.', correctBool:false},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:49, type:'tf', q:'which zeigt den Pfad eines Befehls.', correctBool:true},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:50, type:'tf', q:'modprobe ist älter und lädt keine Abhängigkeiten.', correctBool:false},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:51, type:'tf', q:'multi-user.target entspricht Runlevel 3.', correctBool:true},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:52, type:'tf', q:'Sticky-Bit verhindert in gemeinsamen Verzeichnissen das Löschen fremder Dateien.', correctBool:true},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:53, type:'tf', q:'uname -r zeigt die Kernel-Version.', correctBool:true},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:54, type:'tf', q:'journalctl -b zeigt Logs seit letztem Boot.', correctBool:true},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:55, type:'tf', q:'chmod 600 ~/.ssh/id_rsa ist für SSH verpflichtend.', correctBool:true},</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>// --- Lückentext (56–65) ---</p>
-<p class="p1"><span class="Apple-converted-space">  </span>// Hinweis: Im q-Text stehen „_______“ als Platzhalter; answers = Array von Arrays (zulässige Antworten je Feld)</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:56, type:'fill', q:'Boot-Kette: _______ → Bootloader → _______ (+initramfs) → _______ (PID 1).',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['firmware','bios','uefi'], ['kernel'], ['systemd']], explain:'Firmware/BIOS/UEFI → Kernel(+initramfs) → systemd.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:57, type:'fill', q:'df -h zeigt freien Speicher pro _______; du -h die Nutzung pro _______.',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['dateisystem','filesystem'], ['datei','verzeichnis','dateien','verzeichnisse','datei/verzeichnis','ordner']], explain:'df = Dateisysteme; du = Dateien/Verzeichnisse.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:58, type:'fill', q:'systemd arbeitet mit _______ (anstatt Runlevels).',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['targets']], explain:'Targets statt Runlevel.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:59, type:'fill', q:'SUID entspricht dem Oktal-Präfix _______; SGID _______; Sticky _______.',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['4xxx','4xxx.','4xxx '], ['2xxx','2xxx.','2xxx '], ['1xxx','1xxx.','1xxx ']], explain:'SUID=4xxx, SGID=2xxx, Sticky=1xxx.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:60, type:'fill', q:'Befehl zum Aktivieren von NTP via systemd: timedatectl _______ _______.',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['set-ntp'], ['true']], explain:'timedatectl set-ntp true'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:61, type:'fill', q:'find /var -type f -size +100M findet _______ Dateien größer als _______.',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['reguläre','regulaere','regular','normale'], ['100m','100mb','100 m','100 mb']], explain:'Reguläre Dateien &gt; 100 MB.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:62, type:'fill', q:'Inodes enthalten nicht den _______.',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['dateinamen','dateiname','name']], explain:'Dateiname steht im Verzeichnis-Eintrag, nicht im Inode.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:63, type:'fill', q:'journalctl -u ssh.service -f zeigt die _______-Logs des SSH-Dienstes in _______.',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['service','dienst'], ['echtzeit','live','realtime']], explain:'Service-Logs in Echtzeit.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:64, type:'fill', q:'In Switch Engines ist die Default-Policy der Security Groups: _______.',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['alles blockiert','default deny','deny all','standard: alles blockiert']], explain:'Standard ist „alles blockiert“.'},</p>
-<p class="p1"><span class="Apple-converted-space">  </span>{id:65, type:'fill', q:'systemd-analyze _______ &gt; boot.svg erstellt eine grafische Boot-Darstellung.',<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>answers:[['plot']], explain:'systemd-analyze plot &gt; boot.svg'}</p>
-<p class="p1">];</p>
-<p class="p2"><br></p>
-<p class="p1">/*****************</p>
-<p class="p1"><span class="Apple-converted-space"> </span>* QUIZ ENGINE</p>
-<p class="p1"><span class="Apple-converted-space"> </span>*****************/</p>
-<p class="p1">let idx = 0;</p>
-<p class="p1">let answers = new Array(QUESTIONS.length).fill(null); // store user answers</p>
-<p class="p1">let correct = 0, wrong = 0;</p>
-<p class="p2"><br></p>
-<p class="p1">const quizEl = document.getElementById('quiz');</p>
-<p class="p1">const prevBtn = document.getElementById('prev');</p>
-<p class="p1">const nextBtn = document.getElementById('next');</p>
-<p class="p1">const finishBtn = document.getElementById('finish');</p>
-<p class="p1">const checkBtn = document.getElementById('check');</p>
-<p class="p1">const fill = document.getElementById('fill');</p>
-<p class="p1">const progText = document.getElementById('progText');</p>
-<p class="p1">const correctEl = document.getElementById('correct');</p>
-<p class="p1">const wrongEl = document.getElementById('wrong');</p>
-<p class="p1">const accEl = document.getElementById('acc');</p>
-<p class="p2"><br></p>
-<p class="p1">function updateProgress(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const done = answers.filter(a=&gt;a!==null).length;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const pct = Math.round((done/QUESTIONS.length)*100);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>fill.style.width = pct+"%"; fill.textContent = pct+"%";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>progText.textContent = `${done}/${QUESTIONS.length}`;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>correctEl.textContent = correct; wrongEl.textContent = wrong;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const acc = done? Math.round((correct/done)*100) : 0; accEl.textContent = acc+"%";</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function tagOf(q){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='sc') return 'Single Choice';</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='mc') return 'Multiple Choice';</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='tf') return 'Richtig/Falsch';</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='fill') return 'Lückentext';</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return '';</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function render(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const q = QUESTIONS[idx];</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const user = answers[idx];</p>
-<p class="p1"><span class="Apple-converted-space">  </span>let html = `</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question-card"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="q-head"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="q-num"&gt;Frage ${idx+1}/${QUESTIONS.length}&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;span class="q-tag"&gt;${tagOf(q)}&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="q-text"&gt;${q.q}&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='sc' || q.type==='tf'){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const opts = q.type==='tf' ? ['Richtig','Falsch'] : q.opts;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const correctIndex = q.type==='tf' ? (q.correctBool?0:1) : q.correct[0];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="options"&gt;` + opts.map((txt,i)=&gt;{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const chosen = user?.choice===i;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const answered = user!==null;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>let cls = 'option';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if(answered){</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(i===correctIndex) cls += ' correct';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(chosen &amp;&amp; i!==correctIndex) cls += ' wrong';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(chosen &amp;&amp; i===correctIndex) cls += ' selected';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>} else if(chosen){ cls += ' selected'; }</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return `</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="${cls}" data-i="${i}"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="opt-letter"&gt;${String.fromCharCode(65+i)}&lt;/div&gt;&lt;div&gt;${txt}&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}).join('') + `&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="explain ${user!==null?'show':''}"&gt;${ q.explain ? q.explain : '' }&lt;/div&gt;`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>quizEl.innerHTML = html + `&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.option').forEach(opt=&gt;{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opt.addEventListener('click',()=&gt;{</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(answers[idx]!==null) return;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const i = parseInt(opt.dataset.i);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const isCorrect = i === correctIndex;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>answers[idx] = {choice:i, correct:isCorrect};</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(isCorrect) correct++; else wrong++;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>render();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>updateButtons();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>updateProgress();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>} else if(q.type==='mc'){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const chosen = user?.choices || [];</p>
-<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="subtle"&gt;Mehrere Antworten möglich. Markiere alle korrekten Optionen und klicke „Überprüfen“.&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="options"&gt;` + q.opts.map((txt,i)=&gt;{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const isSelected = chosen.includes(i);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>let cls = 'option' + (isSelected?' selected':'');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>// if answered, paint correctness</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if(user &amp;&amp; user.answered){</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const isCorrectOpt = q.correct.includes(i);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(isCorrectOpt) cls += ' correct';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(isSelected &amp;&amp; !isCorrectOpt) cls += ' wrong';</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return `</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="${cls}" data-i="${i}"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">          </span>&lt;div class="opt-letter"&gt;${String.fromCharCode(65+i)}&lt;/div&gt;&lt;div&gt;${txt}&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}).join('') + `&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="explain ${user&amp;&amp;user.answered?'show':''}"&gt;${ q.explain ? q.explain : '' }&lt;/div&gt;`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>quizEl.innerHTML = html + `&lt;/div&gt;`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.querySelectorAll('.option').forEach(opt=&gt;{</p>
-<p class="p1"><span class="Apple-converted-space">      </span>opt.addEventListener('click',()=&gt;{</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(user &amp;&amp; user.answered) return;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const i = parseInt(opt.dataset.i);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const arr = answers[idx]?.choices ? [...answers[idx].choices] : [];</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const pos = arr.indexOf(i);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(pos&gt;=0) arr.splice(pos,1); else arr.push(i);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>answers[idx] = {choices:arr};</p>
-<p class="p1"><span class="Apple-converted-space">        </span>render();</p>
-<p class="p1"><span class="Apple-converted-space">      </span>});</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>} else if(q.type==='fill'){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Build inputs for each blank</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const parts = q.q.split('_______');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>let rendered = '';</p>
-<p class="p1"><span class="Apple-converted-space">    </span>for(let i=0;i&lt;parts.length;i++){</p>
-<p class="p1"><span class="Apple-converted-space">      </span>rendered += parts[i];</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if(i &lt; parts.length-1){</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const val = user?.fills ? user.fills[i] : '';</p>
-<p class="p1"><span class="Apple-converted-space">        </span>rendered += `&lt;span class="blank"&gt;&lt;input type="text" data-blank="${i}" value="${val??''}" placeholder="Antwort ${i+1}" /&gt;&lt;/span&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>html = html.replace(q.q, `&lt;div class="fill-wrap"&gt;${rendered}&lt;/div&gt;`);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>html += `&lt;div class="explain ${user&amp;&amp;user.answered?'show':''}"&gt;${ q.explain ? q.explain : '' }&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>quizEl.innerHTML = html + `&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>updateButtons();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>updateProgress();</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function arraysEqualAsSets(a,b){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(a.length!==b.length) return false;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const s = new Set(a);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>for(const x of b){ if(!s.has(x)) return false; }</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return true;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function normalize(s){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>return (s??'').toString().toLowerCase().trim()</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.replace(/\s+/g,' ')</p>
-<p class="p1"><span class="Apple-converted-space">    </span>.replace(/[.+]$/,''); // toleranter für 4xxx. etc.</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function checkCurrent(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const q = QUESTIONS[idx];</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(answers[idx]!==null &amp;&amp; (q.type==='sc'||q.type==='tf')) return; // already checked</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='mc'){</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const chosen = answers[idx]?.choices || [];</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const isCorrect = arraysEqualAsSets(chosen, q.correct);</p>
-<p class="p1"><span class="Apple-converted-space">      </span>answers[idx] = {choices:chosen, answered:true, correct:isCorrect};</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if(isCorrect) correct++; else wrong++;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>render(); updateButtons(); updateProgress();</p>
-<p class="p1"><span class="Apple-converted-space">  </span>} else if(q.type==='fill'){</p>
-<p class="p1"><span class="Apple-converted-space">      </span>// collect inputs</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const inputs = Array.from(document.querySelectorAll('input[data-blank]'));</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const fills = inputs.map(inp=&gt;normalize(inp.value));</p>
-<p class="p1"><span class="Apple-converted-space">      </span>let allCorrect = true;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>// compare with allowed answers</p>
-<p class="p1"><span class="Apple-converted-space">      </span>for(let i=0;i&lt;q.answers.length;i++){</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const allowed = q.answers[i].map(normalize);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const ok = allowed.includes(fills[i]);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(!ok) allCorrect = false;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// mark UI</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(fills[i].length===0){ allCorrect=false; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>if(ok) inputs[i].classList.add('correct'); else inputs[i].classList.add('wrong');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>inputs[i].readOnly = true;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>answers[idx] = {fills, answered:true, correct:allCorrect};</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if(allCorrect) correct++; else wrong++;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>// show correct solutions inline hint (append)</p>
-<p class="p1"><span class="Apple-converted-space">      </span>const expl = document.querySelector('.explain');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>if(expl){</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const solutions = q.answers.map(a=&gt;`&lt;code&gt;${a[0]}&lt;/code&gt;`).join(' • ');</p>
-<p class="p1"><span class="Apple-converted-space">        </span>expl.innerHTML = (q.explain? q.explain+'&lt;br&gt;':'') + `&lt;div class="subtle"&gt;Musterlösungen: ${solutions}&lt;/div&gt;`;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>expl.classList.add('show');</p>
-<p class="p1"><span class="Apple-converted-space">      </span>}</p>
-<p class="p1"><span class="Apple-converted-space">      </span>updateButtons(); updateProgress();<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">function updateButtons(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const q = QUESTIONS[idx];</p>
-<p class="p1"><span class="Apple-converted-space">  </span>prevBtn.style.display = idx&gt;0? 'inline-block' : 'none';</p>
-<p class="p1"><span class="Apple-converted-space">  </span>finishBtn.style.display = answers.every(a=&gt;a!==null)? 'inline-block' : 'none';</p>
-<p class="p1"><span class="Apple-converted-space">  </span>if(q.type==='mc' || q.type==='fill'){</p>
-<p class="p1"><span class="Apple-converted-space">    </span>checkBtn.style.display = (answers[idx]?.answered? 'none':'inline-block');</p>
-<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>checkBtn.style.display = 'none';</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>// Next button always visible unless last and finished</p>
-<p class="p1"><span class="Apple-converted-space">  </span>nextBtn.style.display = (idx&lt;QUESTIONS.length-1)? 'inline-block' : (answers.every(a=&gt;a!==null)?'none':'inline-block');</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">prevBtn.addEventListener('click', ()=&gt;{ if(idx&gt;0){ idx--; render(); }});</p>
-<p class="p1">nextBtn.addEventListener('click', ()=&gt;{ if(idx&lt;QUESTIONS.length-1){ idx++; render(); }});</p>
-<p class="p1">finishBtn.addEventListener('click', showResult);</p>
-<p class="p1">checkBtn.addEventListener('click', checkCurrent);</p>
-<p class="p2"><br></p>
-<p class="p1">function showResult(){</p>
-<p class="p1"><span class="Apple-converted-space">  </span>const pct = Math.round((correct/QUESTIONS.length)*100);</p>
-<p class="p1"><span class="Apple-converted-space">  </span>let msg = pct&gt;=90? 'Excellent! 🎉' : pct&gt;=75? 'Great job! 🌟' : pct&gt;=60? 'Good effort 👍' : 'Keep practising 📚';</p>
-<p class="p1"><span class="Apple-converted-space">  </span>quizEl.innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="result"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div style="font-size:64px;"&gt;${pct&gt;=90?'🏆':pct&gt;=75?'🌟':pct&gt;=60?'👍':'📚'}&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h2&gt;Quiz abgeschlossen&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="score"&gt;${pct}%&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;p&gt;${msg}&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;div class="grid"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tile"&gt;&lt;div&gt;Fragen gesamt&lt;/div&gt;&lt;div style="font-size:22px;font-weight:800;"&gt;${QUESTIONS.length}&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tile"&gt;&lt;div&gt;Korrekt&lt;/div&gt;&lt;div style="font-size:22px;font-weight:800; color:#bbf7d0;"&gt;${correct}&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="tile"&gt;&lt;div&gt;Falsch&lt;/div&gt;&lt;div style="font-size:22px;font-weight:800; color:#fecaca;"&gt;${wrong}&lt;/div&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;button class="btn primary" style="margin-top:18px;" onclick="location.reload()"&gt;🔄 Neu starten&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>`;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>prevBtn.style.display='none'; nextBtn.style.display='none'; finishBtn.style.display='none'; checkBtn.style.display='none';</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">// Init</p>
-<p class="p1">updateProgress();</p>
-<p class="p1">render();</p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 INSY Übung 02 - Prüfungsvorbereitung</h1>
+            <p>Betriebssysteme, Cloud, Linux-Grundlagen</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill">0%</div>
+            </div>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-label">Fortschritt</div>
+                    <div class="stat-value" id="progressText">0/60</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Richtig</div>
+                    <div class="stat-value" id="correctCount" style="color: #28a745;">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Falsch</div>
+                    <div class="stat-value" id="wrongCount" style="color: #dc3545;">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Erfolgsrate</div>
+                    <div class="stat-value" id="successRate">0%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-content">
+            <div class="category-selector" id="categorySelector">
+                </div>
+
+            <div id="quizContainer"></div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" id="prevBtn" style="display: none;">⬅️ Vorherige Frage</button>
+                <button class="btn btn-primary" id="nextBtn">Nächste Frage ➡️</button>
+                <button class="btn btn-success" id="finishBtn" style="display: none;">✅ Quiz Beenden</button>
+                <button class="btn btn-primary" id="checkAnswerBtn">Antwort Überprüfen ✔️</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>💡 Tipp: Die MC-Fragen (Mehrfachauswahl) erlauben das gleichzeitige Anklicken mehrerer Optionen.</p>
+            <p style="margin-top: 10px;">FHNW - Hochschule für Informatik | INSY 2025</p>
+        </div>
+    </div>
+
+    <script>
+        // Fragen-Datenbank
+        // SC = Single Choice (nur 1 richtige Antwort), MC = Multiple Choice (mehrere richtige Antworten möglich),
+        // RF = Richtig/Falsch (wird als SC mit Optionen Richtig/Falsch implementiert),
+        // FTB = Fill-in-the-Blank (Lückentext)
+        const questionsData = [
+            // TEIL A - Auswahlaufgaben (SC/MC)
+            { type: 'SC', id: 1, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Was ist die primäre Aufgabe des Kernels?', options: ['Benutzeroberfläche bereitstellen', 'Hardware verwalten und Ressourcen zuteilen', 'Pakete installieren', 'Logs rotieren'], correct: 1, explanation: 'Der Kernel (engl. Kern) ist die zentrale Komponente eines OS und verwaltet die Hardware und teilt die Ressourcen an die Prozesse zu.' },
+            { type: 'SC', id: 2, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Ein Betriebssystem ist „unsichtbar“, wenn …', options: ['es keinen Kernel hat', 'es als Embedded OS in Geräten läuft', 'es nur im RAM liegt', 'es keinen Bootloader braucht'], correct: 1, explanation: 'Als Embedded OS (z.B. in IoT-Geräten) ist das OS tief im Gerät integriert und für den Nutzenden nicht direkt als OS erkennbar ("unsichtbar").' },
+            { type: 'MC', id: 3, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Komponenten eines OS laut Notiz?', options: ['Kernel', 'Bootloader', 'Treiber/Dienste/Bibliotheken', 'Browser', 'Tools/Apps'], correct: [0, 1, 2, 4], explanation: 'Alle ausser der Browser sind wesentliche Komponenten eines Betriebssystems. (A: Kernel, B: Bootloader, C: Treiber, D: Tools/Apps).' },
+            { type: 'SC', id: 4, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Ziel der OS-Abstraktion ist v. a. …', options: ['Hardware maximal auslasten', 'Komplexität der Hardware vor Nutzenden verstecken', 'GUI schneller starten', 'Logs minimieren'], correct: 1, explanation: 'Die Abstraktion des Betriebssystems verbirgt die Komplexität der Hardware vor Anwendungen und Nutzenden und bietet eine standardisierte Schnittstelle (API).' },
+            { type: 'SC', id: 5, category: 'paket-management', categoryName: 'Paket-Management (APT)', question: 'APT: apt update bedeutet …', options: ['Pakete upgraden', 'Paketlisten aktualisieren', 'nicht benötigte Pakete entfernen', 'Distribution upgraden'], correct: 1, explanation: 'apt update aktualisiert nur die *Liste* der verfügbaren Pakete, nicht die installierten Programme selbst.' },
+            { type: 'SC', id: 6, category: 'paket-management', categoryName: 'Paket-Management (APT)', question: 'APT: Welcher Befehl darf Abhängigkeiten entfernen/hinzufügen?', options: ['apt upgrade', 'apt full-upgrade (oder dist-upgrade)', 'apt search', 'apt show'], correct: 1, explanation: 'apt upgrade führt nur ein einfaches Upgrade durch, während apt full-upgrade (oder dist-upgrade) auch Abhängigkeiten entfernen/hinzufügen darf, was für ein größeres Upgrade (Distributions-Upgrade) notwendig ist.' },
+            { type: 'SC', id: 7, category: 'paket-management', categoryName: 'Paket-Management (APT)', question: 'Debian-Upgrade: Nach dem Ändern von bookworm → trixie in den Sources folgt …', options: ['apt upgrade', 'apt update und dann apt full-upgrade', 'direkter Reboot', 'apt purge'], correct: 1, explanation: 'Nach dem Ändern der Quellen muss zuerst die Paketliste (apt update) und dann die gesamte Distribution (apt full-upgrade/dist-upgrade) aktualisiert werden.' },
+            { type: 'MC', id: 8, category: 'filesystem-cli', categoryName: 'Dateisystem & CLI', question: 'Dateiansicht: Welche Befehle zeigen Inhalt (nicht nur Namen)?', options: ['ls -la', 'cat', 'less', 'head', 'pwd'], correct: [1, 2, 3], explanation: 'ls -la zeigt nur Dateinamen und Metadaten. pwd zeigt den aktuellen Pfad. cat, less, und head zeigen den Inhalt einer Datei.' },
+            { type: 'SC', id: 9, category: 'filesystem-cli', categoryName: 'Dateisystem & CLI', question: 'df vs. du – warum ist du i. d. R. langsamer?', options: ['Nutzt Netzwerk', 'Liest Superblock', 'Traversiert Dateibäume/Metadaten aller Dateien', 'Hat höhere Priorität'], correct: 2, explanation: 'df liest nur den Superblock pro Dateisystem (sehr schnell). du muss jeden einzelnen Dateibaum rekursiv durchlaufen (langsamer).' },
+            { type: 'SC', id: 10, category: 'ssh-security', categoryName: 'SSH & Sicherheit', question: 'SSH-Sicherheit: Pflichtrechte für privaten Schlüssel?', options: ['400', '600', '644', '700'], correct: 1, explanation: '600 bedeutet rw-------, also nur der Eigentümer darf lesen und schreiben. Dies ist die sicherste Einstellung für private Schlüssel, da SSH diese bei offeneren Rechten verweigert.' },
+            { type: 'SC', id: 11, category: 'cloud-basics', categoryName: 'Cloud & Switch Engines', question: 'Cloud/Switch Engines: Standard bei Security Groups?', options: ['Alles erlaubt', 'Nur ausgehend erlaubt', 'Alles blockiert, Regeln explizit setzen', 'Nur Port 22 offen'], correct: 2, explanation: 'Standardmäßig sind Security Groups restriktiv (alles blockiert). Zugänge müssen explizit erlaubt werden (Security-by-Default).' },
+            { type: 'SC', id: 12, category: 'cloud-basics', categoryName: 'Cloud & Switch Engines', question: 'Floating IP ist …', options: ['interne RFC1918-Adresse', 'öffentliche, zwischen VMs verschiebbare IP', 'DHCP-Lease', 'IPv6-Link-Local'], correct: 1, explanation: 'Eine Floating IP ist eine öffentlich routbare IP-Adresse, die von der Cloud-Plattform bereitgestellt und einer VM zugewiesen/entzogen werden kann.' },
+            { type: 'SC', id: 13, category: 'cloud-basics', categoryName: 'Cloud & Switch Engines', question: 'Flavor beschreibt …', options: ['OS-Version', 'Kernel-Patchlevel', 'vCPU/RAM/Disk-Größe einer VM', 'Paketquelle'], correct: 2, explanation: 'Das Flavor definiert die Größe und Ressourcen (vCPUs, RAM, Festplattengröße) einer VM-Instanz in der Cloud.' },
+            { type: 'SC', id: 14, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Debian-Status aus Notiz (Stand deiner Unterlagen):', options: ['Bookworm: Stable, Trixie: Testing', 'Bookworm: Oldstable, Trixie: Stable', 'Bookworm: EOL, Trixie: Oldstable', 'Beide Stable'], correct: 1, explanation: 'Trixie (13) ist Stable geworden (oder wird es bald), Bookworm (12) ist somit Oldstable.' },
+            { type: 'SC', id: 15, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Kernel 5.6+ ist relevant für …', options: ['cgroups v2', 'WireGuard im Kernel', 'Wayland', 'UnionFS'], correct: 1, explanation: 'WireGuard (VPN-Lösung) wurde ab Kernel 5.6 in den Hauptzweig integriert.' },
+            { type: 'SC', id: 16, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'WSL 2 bringt …', options: ['POSIX-Emulation ohne Kernel', 'echten Linux-Kernel via Hyper-V', 'reines Cygwin', 'Docker-Daemon im Userspace'], correct: 1, explanation: 'WSL 2 nutzt Hyper-V, um einen echten Linux-Kernel auszuführen. WSL 1 war eine reine Systemaufruf-Übersetzungsschicht.' },
+            { type: 'MC', id: 17, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'systemd ist PID 1 und …', options: ['startet/verwaltet Dienste', 'ersetzt Bootloader', 'arbeitet mit Targets statt Runlevels', 'kann Timer (ersetzt viele Cron-Fälle)', 'ist auf BSD Standard'], correct: [0, 2, 3], explanation: 'systemd ist der Init-Prozess (PID 1), startet Dienste, nutzt Targets anstelle von Runlevels und verwaltet Timer. Es ist nicht auf BSD Standard.' },
+            { type: 'SC', id: 18, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'Boot-Reihenfolge (vereinfacht, Start → Login):', options: ['Bootloader → Firmware → Kernel → systemd', 'Firmware → Bootloader → Kernel+initramfs → systemd', 'Firmware → Kernel → Bootloader → systemd', 'Kernel → Firmware → Bootloader → systemd'], correct: 1, explanation: 'Die Firmware (BIOS/UEFI) startet den Bootloader (z.B. GRUB), dieser lädt Kernel und initramfs, und der Kernel startet systemd (PID 1).' },
+            { type: 'SC', id: 19, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'initramfs dient …', options: ['GUI-Treiber laden', 'temporäres Root im RAM, frühe Treiber & Mount', 'Logrotation beim Boot', 'Timesync'], correct: 1, explanation: 'Die initial ramdisk (initramfs) ist ein kleines, temporäres Root-Dateisystem, um früh im Boot-Prozess notwendige Treiber (z.B. für Festplatten) zu laden.' },
+            { type: 'SC', id: 20, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'systemctl isolate multi-user.target …', options: ['fährt herunter', 'wechselt in Mehrbenutzer ohne GUI', 'aktiviert Autologin', 'löscht Dienste'], correct: 1, explanation: 'multi-user.target ist der Zustand ohne grafische Oberfläche. isolate wechselt den Systemzustand auf dieses Target.' },
+            { type: 'SC', id: 21, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'Richtige Zuordnung: graphical.target ≈ Runlevel …', options: ['1', '3', '5', '6'], correct: 2, explanation: 'graphical.target entspricht dem alten Runlevel 5 (Vollständiger Multi-User-Modus mit GUI).' },
+            { type: 'MC', id: 22, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Prozesszustände – wähle korrekte Paare:', options: ['R = running/runnable', 'S = Interruptible Sleep', 'D = Uninterruptible Sleep (I/O-Wait)', 'Z = Zombie', 'T = Stopped'], correct: [0, 1, 2, 3, 4], explanation: 'Alle genannten Prozesszustände und ihre Abkürzungen sind korrekt.' },
+            { type: 'SC', id: 23, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Signals: „sauber beenden“ ist standardmäßig …', options: ['SIGINT (2)', 'SIGTERM (15)', 'SIGKILL (9)', 'SIGHUP (1)'], correct: 1, explanation: 'SIGTERM (15) ist das "sanfte" Beenden, bei dem der Prozess seine Arbeit sauber abschließen kann. SIGKILL (9) ist das erzwungene Beenden.' },
+            { type: 'MC', id: 24, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Kernel-Module – richtige Aussagen:', options: ['lsmod listet geladene Module', 'modprobe lädt inkl. Abhängigkeiten', 'insmod ist moderner als modprobe', 'Module liegen unter /lib/modules/$(uname -r)/', 'depmod -a erstellt Abhängigkeitslisten'], correct: [0, 1, 3, 4], explanation: 'insmod ist älter, modprobe ist moderner und kann Abhängigkeiten auflösen. Die anderen Aussagen sind korrekt.' },
+            { type: 'SC', id: 25, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'Zeit & NTP: Aktivierung via systemd erfolgt durch …', options: ['timedatectl set-ntp true', 'ntpdate now', 'hwclock --sync', 'date -s now'], correct: 0, explanation: 'timedatectl ist das systemd-Tool zur Konfiguration der Systemzeit, einschliesslich der NTP-Synchronisation.' },
+            { type: 'SC', id: 26, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'systemd-analyze blame zeigt …', options: ['CPU-Last pro Dienst', 'Boot-Dauer pro Dienst', 'Abhängigkeiten', 'Speicherverbrauch'], correct: 1, explanation: 'systemd-analyze blame listet die benötigte Boot-Zeit für jeden Dienst auf und hilft bei der Optimierung der Startgeschwindigkeit.' },
+            { type: 'MC', id: 27, category: 'filesystem-cli', categoryName: 'Dateisystem & CLI', question: 'FHS – richtige Paare:', options: ['/etc – Konfigurationsdateien', '/var – variable Daten/Logs', '/usr – Nutzer-Homes', '/dev – Gerätedateien', '/bin – essenzielle Programme'], correct: [0, 1, 3, 4], explanation: '/usr enthält binaries/libraries. Nutzer-Homes sind in der Regel unter /home.' },
+            { type: 'SC', id: 28, category: 'user-rights', categoryName: 'User-Rechte & Links', question: 'Inodes enthalten nicht …', options: ['Dateigröße & Zeiten', 'Rechte & Owner', 'Dateiname', 'Block-Pointer'], correct: 2, explanation: 'Der Dateiname ist in den Verzeichniseinträgen gespeichert. Die Inode (Index Node) enthält alle Metadaten der Datei ausser dem Namen.' },
+            { type: 'SC', id: 29, category: 'user-rights', categoryName: 'User-Rechte & Links', question: 'Hardlink – welche Aussage stimmt?', options: ['Eigene Inode, kann über Partitionen', 'Gleiche Inode wie Original, gleiche Partition', 'Kann auf Verzeichnisse systemweit', 'Bricht beim Verschieben der Zieldatei immer'], correct: 1, explanation: 'Hardlinks zeigen auf dieselbe Inode (Metadaten-Struktur) wie das Original. Sie sind auf dasselbe Dateisystem beschränkt und können nicht auf Verzeichnisse gesetzt werden.' },
+            { type: 'MC', id: 30, category: 'user-rights', categoryName: 'User-Rechte & Links', question: 'Sonderbits korrekt zugeordnet:', options: ['SUID = u+s = 4xxx', 'SGID = g+s = 2xxx', 'Sticky = +t = 1xxx', 'SGID auf Verzeichnis: neue Dateien erben Gruppe', 'Sticky: jeder kann alles löschen'], correct: [0, 1, 2, 3], explanation: 'Das Sticky-Bit verhindert, dass Benutzer Dateien anderer im gemeinsamen Verzeichnis löschen können. Das Gegenteil von E ist richtig.' },
+            { type: 'SC', id: 31, category: 'user-rights', categoryName: 'User-Rechte & Links', question: 'umask 0022 führt bei neuen Dateien typ. zu …', options: ['666', '644', '600', '755'], correct: 1, explanation: 'Für Dateien (Start 666): 666 - 022 = 644 (rw-r--r--). Für Verzeichnisse (Start 777): 777 - 022 = 755 (rwxr-xr-x).' },
+            { type: 'MC', id: 32, category: 'filesystem-cli', categoryName: 'Dateisystem & CLI', question: 'find – passende Beispiele:', options: ['find / -type f -size +10M', 'find /data -mtime -7', 'find /var -user root', 'find / -perm 644', 'find -iname ohne Pfad ist gültig'], correct: [0, 1, 2, 3], explanation: 'find benötigt immer einen Startpfad (z.B. . oder /) und keine der Aussagen ist ein Beispiel dafür, dass find -iname ohne Pfad gültig ist, was es auch nicht ist.' },
+            { type: 'SC', id: 33, category: 'filesystem-cli', categoryName: 'Dateisystem & CLI', question: 'grep rekursiv & case-insensitive:', options: ['grep -R "Text" .', 'grep -ri "Text" .', 'grep -I "Text" .', 'grep -rI "text" (ohne Pfad/CI)'], correct: 1, explanation: 'r = rekursiv, i = ignore case (case-insensitive).' },
+            { type: 'SC', id: 34, category: 'filesystem-cli', categoryName: 'Dateisystem & CLI', question: 'df ist schneller, weil …', options: ['nur Dateisystem-Metadaten (Superblock) liest', 'nur / scannt', 'nur RAM zählt', 'in C geschrieben ist'], correct: 0, explanation: 'df liest nur den Superblock, der die Dateisystem-Statistiken enthält. Im Gegensatz zu du muss es nicht alle einzelnen Dateien durchgehen.' },
+            { type: 'SC', id: 35, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'journalctl -u ssh.service -f macht …', options: ['Boot-Logs zeigen', 'Live-Follow nur für SSH-Service', 'alle Logs durchsuchen', 'Units neu laden'], correct: 1, explanation: '-u filtert nach der Unit (Dienst), -f (follow) zeigt neue Logs in Echtzeit an.' },
+            { type: 'MC', id: 36, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'Services steuern – korrekt:', options: ['systemctl restart ssh', 'systemctl enable ssh', 'systemctl reload ssh', 'service sshd start ist verpflichtend', 'systemctl status ssh.service'], correct: [0, 1, 2, 4], explanation: 'service ist veraltet (oder nur ein Wrapper für systemctl), systemctl ist das Standard-Tool zum Verwalten von Diensten.' },
+            { type: 'SC', id: 37, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'PXE bedeutet …', options: ['Boot von Disk-Image per USB', 'Boot über Netzwerk (Preboot Execution Environment)', 'Nur für UEFI gültig', 'Nur für Container'], correct: 1, explanation: 'PXE (Preboot Execution Environment) ermöglicht das Booten über das Netzwerk ohne lokale Speichermedien.' },
+            { type: 'SC', id: 38, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'shutdown -r now …', options: ['Hibernate', 'Sofortiger Neustart', 'Neustart in 1 Minute', 'Herunterfahren ohne Netz'], correct: 1, explanation: '-r steht für reboot, now für sofort.' },
+            { type: 'MC', id: 39, category: 'filesystem-cli', categoryName: 'Dateisystem & CLI', question: 'Troubleshooting Netzwerk:', options: ['ip a – Interfaces/IPs', 'hostname -I – nur IP-Adressen', 'ping -c 4 8.8.8.8 – reines Routing/ICMP', 'ping -c 4 google.com – inkl. DNS-Pfad', 'df -h – überprüft Sockets'], correct: [0, 1, 2, 3], explanation: 'df -h prüft Festplattenspeicher, nicht Sockets. Alle anderen sind korrekte Netzwerk-Troubleshooting-Befehle.' },
+            { type: 'SC', id: 40, category: 'user-rights', categoryName: 'User-Rechte & Links', question: 'chmod 755 script.sh ergibt …', options: ['rwxr-xr-x', 'rw-r--r--', 'rwxrwxrwx', 'rwxr-x---'], correct: 0, explanation: '7=rwx (Owner), 5=r-x (Gruppe), 5=r-x (Andere).' },
+            { type: 'SC', id: 41, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Zombie-Prozess ist …', options: ['beendeter Prozess, noch im Prozessbaum (nicht „gereapt“)', 'uninterruptible sleep', 'gestoppter Prozess', 'Kernel-Thread'], correct: 0, explanation: 'Ein Zombie-Prozess hat seine Ausführung beendet, aber sein Eintrag im Prozessbaum wurde noch nicht vom Elternprozess entfernt (gereapt).' },
+            { type: 'SC', id: 42, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'kill -9 <PID> soll …', options: ['immer als Erstes kommen', 'nur wenn SIGTERM nicht hilft', 'nur als root', 'niemals auf Servern'], correct: 1, explanation: 'SIGKILL (-9) erzwingt das sofortige Beenden ohne die Möglichkeit zur Bereinigung. Es sollte nur verwendet werden, wenn SIGTERM (-15) fehlschlägt.' },
+            { type: 'SC', id: 43, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'pstree -p zeigt …', options: ['Dateirechte', 'Prozessbaum mit PIDs', 'Kernel-Module', 'Targets'], correct: 1, explanation: 'pstree zeigt die Prozesse hierarchisch (als Baum), -p fügt die PIDs hinzu.' },
+            { type: 'SC', id: 44, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'systemd-timesyncd konfiguriert man in …', options: ['/etc/systemd/timesyncd.conf', '/etc/ntp.conf', '/etc/default/timesync', '/var/lib/systemd/timesyncd'], correct: 0, explanation: 'Die Konfigurationen für systemd-Dienste liegen typischerweise unter /etc/systemd.' },
+            { type: 'MC', id: 45, category: 'cloud-basics', categoryName: 'Cloud & Switch Engines', question: 'Switch Engines – Praxis (aus deinen Notizen):', options: ['Instanzen im Internet werden sofort angegriffen → restriktive SGs', 'Floating IP zwingend für externen Zugriff', 'Volumes überleben VM-Löschung automatisch in jedem Fall', 'Privaten SSH-Key nie hochladen', 'SSH-Key-Pair statt Passwort'], correct: [0, 1, 3, 4], explanation: 'C ist falsch: Man muss "Delete Volume on Instance Delete" explizit auf "No" setzen, damit das Volume überlebt. Floating IP ist zwingend für externen Zugriff.' },
+            
+            // TEIL B - Richtig/Falsch (RF)
+            { type: 'RF', id: 46, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) apt full-upgrade ist Synonym zu apt dist-upgrade.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. apt full-upgrade ist der modernere, empfohlene Alias für apt dist-upgrade.' },
+            { type: 'RF', id: 47, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) ls -la zeigt auch versteckte Dateien.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. -a bedeutet "all", es werden auch Dateien mit einem Punkt (.) am Anfang angezeigt.' },
+            { type: 'RF', id: 48, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) df sagt dir, welche Unterordner am meisten Platz brauchen.', options: ['Richtig', 'Falsch'], correct: 1, explanation: 'Falsch. df zeigt den belegten Platz *pro Dateisystem*. du zeigt den Platz *pro Verzeichnis/Datei* an.' },
+            { type: 'RF', id: 49, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) systemctl set-default graphical.target setzt GUI als Standard.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. set-default ändert das symbolische Link für das Standard-Target, das beim Booten verwendet wird.' },
+            { type: 'RF', id: 50, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) modprobe ist älter und lädt keine Abhängigkeiten.', options: ['Richtig', 'Falsch'], correct: 1, explanation: 'Falsch. modprobe ist neuer und kann Abhängigkeiten auflösen. insmod ist älter und kann das nicht.' },
+            { type: 'RF', id: 51, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) multi-user.target entspricht Runlevel 3.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. multi-user.target ist der Ersatz für Runlevel 3 (Multi-User-Modus ohne GUI).' },
+            { type: 'RF', id: 52, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) Sticky-Bit verhindert, dass Nicht-Besitzer in einem gemeinsamen Verzeichnis Dateien anderer löschen.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. Das Sticky-Bit (1xxx) stellt sicher, dass nur der Eigentümer oder Root Dateien löschen können, auch wenn Schreibrechte für alle vorhanden sind.' },
+            { type: 'RF', id: 53, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) uname -r zeigt die Kernel-Version.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. -r steht für "kernel-release".' },
+            { type: 'RF', id: 54, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) journalctl -b zeigt Logs seit letztem Boot.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. -b steht für "boot".' },
+            { type: 'RF', id: 55, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) chmod 600 ~/.ssh/id_rsa ist für SSH verpflichtend.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. SSH ist sehr strikt bei den Rechten des privaten Schlüssels.' },
+
+            // TEIL C - Lückentext (FTB)
+            { type: 'FTB', id: 56, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'Boot-Kette: (1) _______ → Bootloader → (2) _______(+initramfs) → (3) _______ (PID 1).', correct: ['Firmware/BIOS/UEFI', 'Kernel', 'systemd'], placeholder: ['(1) Firmware-Typ', '(2) Komponente', '(3) Init-System'], explanation: 'Die Kette ist: Firmware/BIOS/UEFI → Bootloader (z.B. GRUB) → Kernel (+initramfs) → systemd (PID 1).' },
+            { type: 'FTB', id: 57, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'df -h zeigt freien Speicher pro (1) _______, du -h die Nutzung pro (2) _______.', correct: ['Dateisystem', 'Datei/Verzeichnis'], placeholder: ['(1) Einheit', '(2) Einheit'], explanation: 'df (Disk Free) zeigt Dateisystem-Statistiken (vom Superblock), du (Disk Usage) muss alle Dateien/Verzeichnisse durchzählen.' },
+            { type: 'FTB', id: 58, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'systemd arbeitet mit (1) _______ (anstatt Runlevels).', correct: ['Targets'], placeholder: ['(1) systemd-Konzept'], explanation: 'Targets ersetzen die numerischen Runlevels (0-6) von SysVinit.' },
+            { type: 'FTB', id: 59, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'SUID entspricht dem Oktal-Präfix (1) _______, SGID (2) _______, Sticky (3) _______.', correct: ['4xxx', '2xxx', '1xxx'], placeholder: ['(1) SUID', '(2) SGID', '(3) Sticky'], explanation: 'Die Oktal-Präfixe sind: SUID=4, SGID=2, Sticky=1. Zusammen mit den Standardrechten ergeben sich dann z.B. 4755.' },
+            { type: 'FTB', id: 60, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'Der Befehl zum Aktivieren von NTP via systemd lautet: timedatectl (1) _______ (2) _______.', correct: ['set-ntp', 'true'], placeholder: ['(1) Befehlsteil', '(2) Wert'], explanation: 'Der Befehl ist timedatectl set-ntp true.' },
+            { type: 'FTB', id: 61, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'find /var -type f -size +100M findet (1) _______ Dateien größer als (2) _______.', correct: ['reguläre', '100 MB'], placeholder: ['(1) Dateityp', '(2) Dateigröße'], explanation: '-type f sucht nach regulären Dateien, +100M nach Dateien > 100 Megabyte.' },
+            { type: 'FTB', id: 62, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'Inodes enthalten nicht den (1) _______.', correct: ['Dateinamen'], placeholder: ['(1) Fehlendes Metadatum'], explanation: 'Der Dateiname ist in den Verzeichniseinträgen gespeichert, nicht in der Inode.' },
+            { type: 'FTB', id: 63, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'journalctl -u ssh.service -f zeigt die (1) _______-Logs des SSH-Dienstes in (2) _______.', correct: ['Service', 'Echtzeit/Live'], placeholder: ['(1) Typ', '(2) Modus'], explanation: '-u filtert nach der Service-Unit, -f (follow) zeigt die Logs in Echtzeit/Live.' },
+            { type: 'FTB', id: 64, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'In Switch Engines ist die Default-Policy der Security Groups: (1) _______.', correct: ['alles blockiert'], placeholder: ['(1) Default-Regel'], explanation: 'Security by Default: Eingehender Traffic ist standardmäßig alles blockiert.' },
+            { type: 'FTB', id: 65, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'systemd-analyze (1) _______ > boot.svg erstellt eine grafische Boot-Darstellung.', correct: ['plot'], placeholder: ['(1) Befehl'], explanation: 'systemd-analyze plot erstellt eine SVG-Datei (grafische Zeitachse) der Boot-Dauer.' },
+        ];
+
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // Speichert die Antworten des Benutzers
+        let filteredQuestions = []; // Speichert die aktuell gefilterten Fragen
+        let currentCategory = 'all';
+
+        // Hilfsfunktion zum Mischen eines Arrays
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        // Bereitet die Fragen für die Anzeige vor (initial und nach Kategoriewechsel)
+        function initializeQuiz(category) {
+            currentCategory = category;
+            if (category === 'all') {
+                filteredQuestions = questionsData.slice();
+            } else {
+                filteredQuestions = questionsData.filter(q => q.category === category);
+            }
+            // Optional: Fragen mischen, wenn alle Fragen ausgewählt sind.
+            // shuffleArray(filteredQuestions);
+            
+            // Setze den Index auf 0 zurück, falls die aktuelle Frage in der neuen Kategorie nicht existiert
+            if (currentQuestionIndex >= filteredQuestions.length) {
+                currentQuestionIndex = 0;
+            }
+            if (filteredQuestions.length === 0) {
+                document.getElementById('quizContainer').innerHTML = '<p style="text-align: center; margin-top: 50px; font-size: 1.2em;">Keine Fragen in dieser Kategorie.</p>';
+                document.getElementById('prevBtn').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('finishBtn').style.display = 'none';
+                document.getElementById('checkAnswerBtn').style.display = 'none';
+                updateProgress();
+                return;
+            }
+
+            renderQuestion();
+            updateProgress();
+            updateNavigationButtons();
+        }
+
+        // Aktualisiert die Anzeige des Fortschritts
+        function updateProgress() {
+            const totalQuestions = filteredQuestions.length;
+            const answeredQuestions = Object.keys(userAnswers).filter(id => {
+                const q = questionsData.find(qd => qd.id == id);
+                return q && (q.category === currentCategory || currentCategory === 'all') && userAnswers[id] !== undefined;
+            }).length;
+
+            const correctCount = Object.values(userAnswers).filter(a => a.isCorrect).length;
+            const wrongCount = Object.values(userAnswers).filter(a => a.isAnswered && !a.isCorrect).length;
+            const successRate = answeredQuestions > 0 ? ((correctCount / answeredQuestions) * 100).toFixed(0) : 0;
+            const progress = (answeredQuestions / totalQuestions) * 100 || 0;
+
+            document.getElementById('progressFill').style.width = `${progress}%`;
+            document.getElementById('progressFill').textContent = `${progress.toFixed(0)}%`;
+            document.getElementById('progressText').textContent = `${answeredQuestions}/${totalQuestions}`;
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('wrongCount').textContent = wrongCount;
+            document.getElementById('successRate').textContent = `${successRate}%`;
+
+            if (answeredQuestions === totalQuestions && totalQuestions > 0) {
+                document.getElementById('finishBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('finishBtn').style.display = 'none';
+            }
+        }
+
+        // Rendert die aktuelle Frage
+        function renderQuestion() {
+            const questionContainer = document.getElementById('quizContainer');
+            if (filteredQuestions.length === 0) return;
+
+            const question = filteredQuestions[currentQuestionIndex];
+            const isAnswered = userAnswers[question.id] && userAnswers[question.id].isAnswered;
+            const currentAnswer = userAnswers[question.id] ? userAnswers[question.id].selection : null;
+
+            let optionsHtml = '';
+            
+            // SC, MC und R/F Fragen
+            if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
+                optionsHtml = question.options.map((option, index) => {
+                    const isSelected = Array.isArray(currentAnswer) ? currentAnswer.includes(index) : currentAnswer === index;
+                    const isCorrect = isAnswered && (Array.isArray(question.correct) ? question.correct.includes(index) : question.correct === index);
+                    const isWrongSelection = isSelected && isAnswered && !isCorrect;
+                    const optionClass = isSelected ? 'selected' : '';
+                    const resultClass = isAnswered ? (isCorrect ? 'correct' : (isWrongSelection ? 'wrong' : '')) : '';
+                    
+                    let letter = String.fromCharCode(65 + index); // A, B, C, D...
+
+                    return `
+                        <div class="option ${optionClass} ${resultClass}" data-index="${index}" data-correct="${isCorrect}">
+                            <div class="option-letter">${letter}</div>
+                            <span>${option}</span>
+                            ${question.type === 'MC' && !isAnswered ? `<input type="checkbox" class="option-checkbox" ${isSelected ? 'checked' : ''} />` : ''}
+                            ${isAnswered && question.type === 'MC' && isCorrect ? '✅' : ''}
+                            ${isAnswered && question.type === 'MC' && isWrongSelection ? '❌' : ''}
+                        </div>
+                    `;
+                }).join('');
+
+            // Lückentext Fragen
+            } else if (question.type === 'FTB') {
+                optionsHtml = '<div class="fill-in-the-blank-container">';
+                const numBlanks = question.correct.length;
+                for (let i = 0; i < numBlanks; i++) {
+                    const value = currentAnswer && currentAnswer[i] !== undefined ? currentAnswer[i] : '';
+                    const placeholder = question.placeholder ? question.placeholder[i] : `Lücke ${i + 1}`;
+                    let inputClass = 'fill-in-the-blank-input';
+                    
+                    if (isAnswered) {
+                        const isBlankCorrect = userAnswers[question.id].correctBlanks[i];
+                        inputClass += isBlankCorrect ? ' correct-answer' : ' wrong-answer';
+                    }
+
+                    optionsHtml += `
+                        <div class="fill-in-the-blank-wrapper">
+                            <label for="ftb-${i}" class="fill-in-the-blank-label">${placeholder}:</label>
+                            <input type="text" id="ftb-${i}" data-index="${i}" class="${inputClass}" value="${value}" ${isAnswered ? 'disabled' : ''}>
+                        </div>
+                    `;
+                }
+                optionsHtml += '</div>';
+            }
+
+            // Gesamtes Question Card HTML
+            questionContainer.innerHTML = `
+                <div class="question-card fade-in" id="q-${question.id}">
+                    <div class="question-header">
+                        <div class="question-number">Frage ${currentQuestionIndex + 1} von ${filteredQuestions.length}</div>
+                        <div class="category-tag">${question.categoryName} (${question.type})</div>
+                    </div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options ${question.type === 'MC' ? 'multiple-choice' : ''}">${optionsHtml}</div>
+                    <div class="answer-section ${isAnswered ? 'show' : 'hide'}" id="answer-q-${question.id}">
+                        <div class="answer-header">Lösung:</div>
+                        <div class="answer-text">
+                            ${getAnswerExplanation(question, userAnswers[question.id])}
+                            ${question.explanation ? `<p style="margin-top: 10px; font-style: italic;">Erklärung: ${question.explanation}</p>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Event Listener für Auswahlfragen (SC/MC/RF)
+            if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
+                document.querySelectorAll('.option').forEach(optionElement => {
+                    if (!isAnswered) { // Nur klickbar, wenn noch nicht beantwortet
+                        optionElement.addEventListener('click', () => handleOptionClick(question, optionElement));
+                    }
+                });
+            }
+
+            updateNavigationButtons();
+            
+            // Check-Answer Button Logik
+            document.getElementById('checkAnswerBtn').onclick = () => checkAnswer(question);
+            document.getElementById('checkAnswerBtn').style.display = isAnswered ? 'none' : 'inline-block';
+        }
+
+        // Generiert die Erklärung/Lösung für die Antwortsektion
+        function getAnswerExplanation(question, userAnswer) {
+            if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
+                let correctOptions = Array.isArray(question.correct) ? question.correct : [question.correct];
+                let correctLetters = correctOptions.map(i => String.fromCharCode(65 + i)).join(', ');
+                let userLetters = Array.isArray(userAnswer.selection) ? userAnswer.selection.map(i => String.fromCharCode(65 + i)).join(', ') : (userAnswer.selection !== null ? String.fromCharCode(65 + userAnswer.selection + 65) : 'N/A');
+
+                let status = userAnswer.isCorrect ? '<span style="color: #28a745; font-weight: bold;">RICHTIG!</span>' : '<span style="color: #dc3545; font-weight: bold;">FALSCH.</span>';
+
+                return `
+                    <p>Status: ${status}</p>
+                    <p>Ihre Auswahl: ${userAnswer.selection === null ? 'Keine Auswahl' : userLetters}</p>
+                    <p>Korrekte Option(en): ${correctLetters} (${correctOptions.map(i => question.options[i]).join('; ')})</p>
+                `;
+            } else if (question.type === 'FTB') {
+                let html = userAnswer.isCorrect ? '<p style="color: #28a745; font-weight: bold;">RICHTIG!</p>' : '<p style="color: #dc3545; font-weight: bold;">FALSCH.</p>';
+                html += '<table><thead><tr><th>Lücke</th><th>Ihre Antwort</th><th>Korrekte Antwort</th></tr></thead><tbody>';
+
+                for (let i = 0; i < question.correct.length; i++) {
+                    const userVal = userAnswer.selection[i] || '';
+                    const correctVal = Array.isArray(question.correct[i]) ? question.correct[i].join(' ODER ') : question.correct[i];
+                    const statusIcon = userAnswer.correctBlanks[i] ? '✅' : '❌';
+                    const placeholderText = question.placeholder ? question.placeholder[i] : `Lücke ${i+1}`;
+                    html += `<tr><td>${placeholderText}</td><td>${statusIcon} ${userVal}</td><td>${correctVal}</td></tr>`;
+                }
+                html += '</tbody></table>';
+                return html;
+            }
+        }
+
+
+        // Behandelt Klicks auf Optionen (Auswahlfragen)
+        function handleOptionClick(question, optionElement) {
+            const index = parseInt(optionElement.getAttribute('data-index'));
+            const options = document.querySelectorAll('.option');
+            let currentSelection = userAnswers[question.id] && userAnswers[question.id].selection ? userAnswers[question.id].selection : (question.type === 'MC' ? [] : null);
+            
+            // Wenn es eine Single Choice (SC/RF) ist, entferne alle Selektionen
+            if (question.type === 'SC' || question.type === 'RF') {
+                options.forEach(opt => opt.classList.remove('selected'));
+                currentSelection = index;
+                optionElement.classList.add('selected');
+            } 
+            // Wenn es eine Multiple Choice (MC) ist
+            else if (question.type === 'MC') {
+                if (optionElement.classList.contains('selected')) {
+                    optionElement.classList.remove('selected');
+                    const idxToRemove = currentSelection.indexOf(index);
+                    if (idxToRemove > -1) {
+                        currentSelection.splice(idxToRemove, 1);
+                    }
+                } else {
+                    optionElement.classList.add('selected');
+                    currentSelection.push(index);
+                }
+            }
+
+            // Speichere die aktuelle Auswahl VOR der finalen Überprüfung
+            userAnswers[question.id] = { selection: currentSelection, isAnswered: false, isCorrect: false };
+            updateProgress();
+        }
+
+        // Überprüft die Antwort
+        function checkAnswer(question) {
+            if (userAnswers[question.id] && userAnswers[question.id].isAnswered) return; // Schon beantwortet
+            
+            let isCorrect = false;
+            let currentSelection = null;
+            let correctBlanks = [];
+
+            // SC/MC/RF
+            if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
+                const selectedOptions = Array.from(document.querySelectorAll('.option.selected')).map(el => parseInt(el.getAttribute('data-index')));
+                currentSelection = question.type === 'SC' || question.type === 'RF' ? (selectedOptions.length > 0 ? selectedOptions[0] : null) : selectedOptions;
+
+                if (question.type === 'SC' || question.type === 'RF') {
+                    isCorrect = currentSelection === question.correct;
+                } else { // MC
+                    const correctAnswers = question.correct;
+                    // Überprüfung: Hat der Nutzer genau die richtigen Antworten gewählt?
+                    isCorrect = selectedOptions.length === correctAnswers.length && 
+                                selectedOptions.every(val => correctAnswers.includes(val));
+                }
+            } 
+            // FTB
+            else if (question.type === 'FTB') {
+                const inputs = Array.from(document.querySelectorAll('.fill-in-the-blank-input'));
+                currentSelection = inputs.map(input => input.value.trim());
+
+                let allBlanksCorrect = true;
+                correctBlanks = currentSelection.map((userAnswer, index) => {
+                    const correctAnswers = Array.isArray(question.correct[index]) ? question.correct[index] : [question.correct[index]];
+                    const match = correctAnswers.some(correctAnswer => userAnswer.toLowerCase() === correctAnswer.toLowerCase());
+                    if (!match) allBlanksCorrect = false;
+                    return match;
+                });
+                isCorrect = allBlanksCorrect;
+            }
+
+
+            // Speichere das Ergebnis
+            userAnswers[question.id] = {
+                selection: currentSelection,
+                isAnswered: true,
+                isCorrect: isCorrect,
+                correctBlanks: correctBlanks // Nur für FTB relevant
+            };
+
+            // Re-render, um die Lösung anzuzeigen
+            renderQuestion();
+            updateProgress();
+        }
+
+        // Aktualisiert die Anzeige der Navigationsbuttons
+        function updateNavigationButtons() {
+            const total = filteredQuestions.length;
+
+            document.getElementById('prevBtn').style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
+            document.getElementById('nextBtn').style.display = currentQuestionIndex < total - 1 ? 'inline-block' : 'none';
+
+            // Wenn es die letzte Frage ist und alle Fragen beantwortet sind
+            const answeredCount = Object.keys(userAnswers).filter(id => {
+                const q = questionsData.find(qd => qd.id == id);
+                return q && (q.category === currentCategory || currentCategory === 'all') && userAnswers[id] && userAnswers[id].isAnswered;
+            }).length;
+
+            if (currentQuestionIndex === total - 1 && answeredCount === total) {
+                 document.getElementById('finishBtn').style.display = 'inline-block';
+                 document.getElementById('nextBtn').style.display = 'none';
+            } else if (currentQuestionIndex === total - 1 && answeredCount < total) {
+                // Letzte Frage, noch nicht alle beantwortet
+                document.getElementById('finishBtn').style.display = 'inline-block';
+                document.getElementById('nextBtn').style.display = 'none';
+            } else {
+                document.getElementById('finishBtn').style.display = 'none';
+            }
+        }
+
+        // Navigations-Logik
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                renderQuestion();
+            }
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentQuestionIndex < filteredQuestions.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            }
+        });
+
+        document.getElementById('finishBtn').addEventListener('click', () => {
+            // Zeige die Zusammenfassung
+            showResults();
+        });
+
+
+        // Rendert die Ergebnisübersicht
+        function showResults() {
+            const totalQuestions = filteredQuestions.length;
+            const correctCount = Object.keys(userAnswers).filter(id => {
+                const q = questionsData.find(qd => qd.id == id);
+                return q && (q.category === currentCategory || currentCategory === 'all') && userAnswers[id] && userAnswers[id].isCorrect;
+            }).length;
+            
+            const answeredCount = Object.keys(userAnswers).filter(id => {
+                const q = questionsData.find(qd => qd.id == id);
+                return q && (q.category === currentCategory || currentCategory === 'all') && userAnswers[id] && userAnswers[id].isAnswered;
+            }).length;
+
+            const score = (correctCount / totalQuestions) * 100;
+            const passed = score >= 50; // Einfache 50%-Regel
+
+            document.querySelector('.quiz-content').innerHTML = `
+                <div class="result-summary fade-in">
+                    <h2>${passed ? 'Glückwunsch! Bestanden! 🎉' : 'Weiter Üben... 😥'}</h2>
+                    <p>Sie haben das Quiz in der Kategorie <strong>"${document.querySelector('.category-btn.active').textContent}"</strong> abgeschlossen.</p>
+                    <div class="result-score">${correctCount}/${totalQuestions}</div>
+                    <p>Erfolgsrate: <strong>${score.toFixed(0)}%</strong></p>
+
+                    <div class="result-details">
+                        <div class="result-detail">
+                            <div class="stat-label">Gesamtzahl Fragen</div>
+                            <div class="result-detail-value">${totalQuestions}</div>
+                        </div>
+                        <div class="result-detail">
+                            <div class="stat-label">Beantwortet</div>
+                            <div class="result-detail-value">${answeredCount}</div>
+                        </div>
+                        <div class="result-detail">
+                            <div class="stat-label">Richtig</div>
+                            <div class="result-detail-value" style="color: #28a745;">${correctCount}</div>
+                        </div>
+                        <div class="result-detail">
+                            <div class="stat-label">Falsch</div>
+                            <div class="result-detail-value" style="color: #dc3545;">${answeredCount - correctCount}</div>
+                        </div>
+                    </div>
+
+                    <div class="button-group" style="margin-top: 40px;">
+                        <button class="btn btn-primary" onclick="window.location.reload();">Neues Quiz starten</button>
+                        <button class="btn btn-secondary" onclick="reviewAnswers();">Antworten einsehen</button>
+                    </div>
+                </div>
+            `;
+            document.querySelector('.button-group').style.display = 'none'; // Verstecke die alten Nav-Buttons
+        }
+
+        // Logik zum Einsehen der Antworten nach Abschluss des Quiz (optional)
+        function reviewAnswers() {
+            // Setze den Index zurück und re-initialisiere, um alle Fragen anzuzeigen
+            currentQuestionIndex = 0;
+            initializeQuiz(currentCategory);
+            document.getElementById('checkAnswerBtn').style.display = 'none'; // Verstecke den Check-Button
+            document.getElementById('finishBtn').style.display = 'none';
+        }
+        
+        // Dynamische Generierung der Kategorien-Buttons
+        function setupCategories() {
+            const categories = questionsData.reduce((acc, q) => {
+                acc[q.category] = (acc[q.category] || 0) + 1;
+                return acc;
+            }, {});
+
+            const categorySelector = document.getElementById('categorySelector');
+            let html = `<button class="category-btn active" data-category="all">Alle Fragen (${questionsData.length})</button>`;
+            
+            // Definiere sichtbare Namen für die Kategorien
+            const categoryNames = {
+                'os-kernel': 'OS: Kernel/Abstraktion (7)',
+                'paket-management': 'Paket-Management (3)',
+                'filesystem-cli': 'Dateisystem/CLI (6)',
+                'ssh-security': 'SSH/Sicherheit (1)',
+                'cloud-basics': 'Cloud/SE Basics (5)',
+                'boot-systemd': 'Boot/systemd (8)',
+                'user-rights': 'User-Rechte/Links (4)',
+                'mixed': 'Bonus (20) R/F & Lückentext' 
+            };
+            
+            // Filtere die Hauptkategorien, um die Reihenfolge beizubehalten
+            const orderedCategories = [
+                'os-kernel', 'paket-management', 'filesystem-cli', 
+                'ssh-security', 'cloud-basics', 'boot-systemd', 'user-rights', 'mixed'
+            ];
+
+            orderedCategories.forEach(cat => {
+                if (categories[cat]) {
+                    const name = categoryNames[cat] || cat;
+                    html += `<button class="category-btn" data-category="${cat}">${name}</button>`;
+                }
+            });
+
+            categorySelector.innerHTML = html;
+
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentQuestionIndex = 0; // Setze den Index beim Wechsel zurück
+                    userAnswers = {}; // Setze Antworten zurück beim Kategoriewechsel
+                    initializeQuiz(e.target.getAttribute('data-category'));
+                });
+            });
+        }
+
+
+        // Startet das Quiz beim Laden der Seite
+        document.addEventListener('DOMContentLoaded', () => {
+            setupCategories();
+            initializeQuiz('all');
+        });
+
+    </script>
 </body>
 </html>
