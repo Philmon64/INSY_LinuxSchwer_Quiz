@@ -5,443 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>INSY Übung 02 - Prüfungsvorbereitung Quiz</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            min-height: 100vh; padding: 20px;
         }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .header h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
-        }
-
-        .progress-container {
-            background: #f0f0f0;
-            padding: 20px 30px;
-            border-bottom: 2px solid #e0e0e0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 30px;
-            background: #e0e0e0;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-top: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .stat {
-            background: white;
-            padding: 10px 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .stat-label {
-            font-size: 0.85em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .quiz-content {
-            padding: 30px;
-        }
-
-        .category-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .category-btn {
-            padding: 12px 24px;
-            border: 2px solid #667eea;
-            background: white;
-            color: #667eea;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .category-btn:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
-        }
-
-        .category-btn.active {
-            background: #667eea;
-            color: white;
-        }
-
-        .question-card {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .question-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .question-number {
-            background: #667eea;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-
-        .category-tag {
-            background: #764ba2;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.85em;
-        }
-
-        .question-text {
-            font-size: 1.2em;
-            color: #333;
-            margin-bottom: 25px;
-            line-height: 1.6;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        /* Stil für Multiple-Choice Optionen */
-        .option {
-            background: white;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            padding: 15px 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-        }
-
-        .option:hover {
-            border-color: #667eea;
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
-        }
-
-        .option-letter {
-            background: #667eea;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .option.selected {
-            border-color: #667eea;
-            background: #f0f4ff;
-        }
-
-        .option.correct {
-            border-color: #28a745;
-            background: #d4edda;
-        }
-
-        .option.correct .option-letter {
-            background: #28a745;
-        }
-
-        .option.wrong {
-            border-color: #dc3545;
-            background: #f8d7da;
-        }
-
-        .option.wrong .option-letter {
-            background: #dc3545;
-        }
-        
-        /* Checkbox-Stil für MC-Fragen mit Mehrfachauswahl */
-        .option-checkbox {
-            position: absolute;
-            right: 20px;
-            width: 25px;
-            height: 25px;
-        }
-
-        /* Stil für Lückentext-Antworten */
-        .fill-in-the-blank-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .fill-in-the-blank-input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #ccc;
-            border-radius: 8px;
-            font-size: 1.1em;
-            transition: border-color 0.3s;
-        }
-
-        .fill-in-the-blank-input:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-
-        .fill-in-the-blank-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .fill-in-the-blank-label {
-            font-weight: bold;
-            color: #333;
-            min-width: 120px;
-        }
-
-        .answer-section {
-            margin-top: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            border-left: 4px solid #667eea;
-        }
-
-        .answer-section.show {
-            display: block;
-        }
-
-        .answer-section.hide {
-            display: none;
-        }
-
-        .answer-header {
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 10px;
-            font-size: 1.1em;
-        }
-
-        .answer-text {
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            flex: 1;
-            min-width: 150px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #545b62;
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: #28a745;
-            color: white;
-        }
-
-        .btn-success:hover {
-            background: #218838;
-            transform: translateY(-2px);
-        }
-
-        .result-summary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 40px;
-            border-radius: 15px;
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .result-summary h2 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
-        }
-
-        .result-score {
-            font-size: 4em;
-            font-weight: bold;
-            margin: 20px 0;
-        }
-
-        .result-details {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .result-detail {
-            background: rgba(255,255,255,0.2);
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        .result-detail-value {
-            font-size: 2em;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .footer {
-            background: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            color: #666;
-            border-top: 2px solid #e0e0e0;
-        }
-
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; text-align: center; }
+        .header h1 { font-size: 2em; margin-bottom: 10px; }
+        .header p { font-size: 1.1em; opacity: 0.9; }
+        .progress-container { background: #f0f0f0; padding: 20px 30px; border-bottom: 2px solid #e0e0e0; }
+        .progress-bar { width: 100%; height: 30px; background: #e0e0e0; border-radius: 15px; overflow: hidden; position: relative; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); transition: width 0.3s ease; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; }
+        .stats { display: flex; justify-content: space-around; margin-top: 15px; flex-wrap: wrap; gap: 10px; }
+        .stat { background: white; padding: 10px 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .stat-label { font-size: 0.85em; color: #666; margin-bottom: 5px; }
+        .stat-value { font-size: 1.5em; font-weight: bold; color: #667eea; }
+        .quiz-content { padding: 30px; }
+        .category-selector { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .category-btn { padding: 12px 24px; border: 2px solid #667eea; background: white; color: #667eea; border-radius: 25px; cursor: pointer; font-size: 1em; transition: all 0.3s ease; font-weight: 600; }
+        .category-btn:hover { background: #667eea; color: white; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3); }
+        .category-btn.active { background: #667eea; color: white; }
+        .question-card { background: #f8f9fa; border-radius: 15px; padding: 30px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
+        .question-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .question-number { background: #667eea; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; }
+        .category-tag { background: #764ba2; color: white; padding: 8px 16px; border-radius: 20px; font-size: 0.85em; }
+        .question-text { font-size: 1.2em; color: #333; margin-bottom: 25px; line-height: 1.6; }
+        .options { display: flex; flex-direction: column; gap: 12px; }
+        .option { background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 15px 20px; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 15px; position: relative; }
+        .option:hover { border-color: #667eea; transform: translateX(5px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2); }
+        .option-letter { background: #667eea; color: white; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+        .option.selected { border-color: #667eea; background: #f0f4ff; }
+        .option.correct { border-color: #28a745; background: #d4edda; }
+        .option.correct .option-letter { background: #28a745; }
+        .option.wrong { border-color: #dc3545; background: #f8d7da; }
+        .option.wrong .option-letter { background: #dc3545; }
+        .option-checkbox { position: absolute; right: 20px; width: 25px; height: 25px; }
+        .fill-in-the-blank-container { display: flex; flex-direction: column; gap: 15px; }
+        .fill-in-the-blank-input { width: 100%; padding: 10px; border: 2px solid #ccc; border-radius: 8px; font-size: 1.1em; transition: border-color 0.3s; }
+        .fill-in-the-blank-input:focus { border-color: #667eea; outline: none; }
+        .fill-in-the-blank-wrapper { display: flex; align-items: center; gap: 10px; }
+        .fill-in-the-blank-label { font-weight: bold; color: #333; min-width: 120px; }
+        .answer-section { margin-top: 20px; padding: 20px; background: white; border-radius: 12px; border-left: 4px solid #667eea; }
+        .answer-section.show { display: block; }
+        .answer-section.hide { display: none; }
+        .answer-header { font-weight: bold; color: #667eea; margin-bottom: 10px; font-size: 1.1em; }
+        .answer-text { color: #333; line-height: 1.6; }
+        .button-group { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        .btn { padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: 600; transition: all 0.3s ease; flex: 1; min-width: 150px; }
+        .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4); }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-secondary:hover { background: #545b62; transform: translateY(-2px); }
+        .btn-success { background: #28a745; color: white; }
+        .btn-success:hover { background: #218838; transform: translateY(-2px); }
+        .result-summary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 15px; text-align: center; margin-top: 30px; }
+        .result-summary h2 { font-size: 2.5em; margin-bottom: 20px; }
+        .result-score { font-size: 4em; font-weight: bold; margin: 20px 0; }
+        .result-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; margin-top: 30px; }
+        .result-detail { background: rgba(255,255,255,0.2); padding: 20px; border-radius: 12px; }
+        .result-detail-value { font-size: 2em; font-weight: bold; margin-top: 10px; }
+        .footer { background: #f8f9fa; padding: 20px; text-align: center; color: #666; border-top: 2px solid #e0e0e0; }
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.5em;
-            }
-
-            .question-text {
-                font-size: 1.1em;
-            }
-
-            .btn {
-                min-width: 100%;
-            }
-
-            .result-score {
-                font-size: 3em;
-            }
+            .header h1 { font-size: 1.5em; }
+            .question-text { font-size: 1.1em; }
+            .btn { min-width: 100%; }
+            .result-score { font-size: 3em; }
         }
-
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Visuelle Korrektur für Richtig/Falsch-Felder */
-        .fill-in-the-blank-input.correct-answer {
-            border-color: #28a745;
-            background-color: #d4edda;
-        }
-
-        .fill-in-the-blank-input.wrong-answer {
-            border-color: #dc3545;
-            background-color: #f8d7da;
-        }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px);} to { opacity: 1; transform: translateY(0);} }
+        .fill-in-the-blank-input.correct-answer { border-color: #28a745; background-color: #d4edda; }
+        .fill-in-the-blank-input.wrong-answer { border-color: #dc3545; background-color: #f8d7da; }
     </style>
 </head>
 <body>
@@ -458,7 +93,7 @@
             <div class="stats">
                 <div class="stat">
                     <div class="stat-label">Fortschritt</div>
-                    <div class="stat-value" id="progressText">0/60</div>
+                    <div class="stat-value" id="progressText">0/0</div>
                 </div>
                 <div class="stat">
                     <div class="stat-label">Richtig</div>
@@ -476,9 +111,7 @@
         </div>
 
         <div class="quiz-content">
-            <div class="category-selector" id="categorySelector">
-                </div>
-
+            <div class="category-selector" id="categorySelector"></div>
             <div id="quizContainer"></div>
 
             <div class="button-group">
@@ -497,9 +130,6 @@
 
     <script>
         // Fragen-Datenbank
-        // SC = Single Choice (nur 1 richtige Antwort), MC = Multiple Choice (mehrere richtige Antworten möglich),
-        // RF = Richtig/Falsch (wird als SC mit Optionen Richtig/Falsch implementiert),
-        // FTB = Fill-in-the-Blank (Lückentext)
         const questionsData = [
             // TEIL A - Auswahlaufgaben (SC/MC)
             { type: 'SC', id: 1, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Was ist die primäre Aufgabe des Kernels?', options: ['Benutzeroberfläche bereitstellen', 'Hardware verwalten und Ressourcen zuteilen', 'Pakete installieren', 'Logs rotieren'], correct: 1, explanation: 'Der Kernel (engl. Kern) ist die zentrale Komponente eines OS und verwaltet die Hardware und teilt die Ressourcen an die Prozesse zu.' },
@@ -519,7 +149,7 @@
             { type: 'SC', id: 15, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'Kernel 5.6+ ist relevant für …', options: ['cgroups v2', 'WireGuard im Kernel', 'Wayland', 'UnionFS'], correct: 1, explanation: 'WireGuard (VPN-Lösung) wurde ab Kernel 5.6 in den Hauptzweig integriert.' },
             { type: 'SC', id: 16, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'WSL 2 bringt …', options: ['POSIX-Emulation ohne Kernel', 'echten Linux-Kernel via Hyper-V', 'reines Cygwin', 'Docker-Daemon im Userspace'], correct: 1, explanation: 'WSL 2 nutzt Hyper-V, um einen echten Linux-Kernel auszuführen. WSL 1 war eine reine Systemaufruf-Übersetzungsschicht.' },
             { type: 'MC', id: 17, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'systemd ist PID 1 und …', options: ['startet/verwaltet Dienste', 'ersetzt Bootloader', 'arbeitet mit Targets statt Runlevels', 'kann Timer (ersetzt viele Cron-Fälle)', 'ist auf BSD Standard'], correct: [0, 2, 3], explanation: 'systemd ist der Init-Prozess (PID 1), startet Dienste, nutzt Targets anstelle von Runlevels und verwaltet Timer. Es ist nicht auf BSD Standard.' },
-            { type: 'SC', id: 18, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'Boot-Reihenfolge (vereinfacht, Start → Login):', options: ['Bootloader → Firmware → Kernel → systemd', 'Firmware → Bootloader → Kernel+initramfs → systemd', 'Firmware → Kernel → Bootloader → systemd', 'Kernel → Firmware → Bootloader → systemd'], correct: 1, explanation: 'Die Firmware (BIOS/UEFI) startet den Bootloader (z.B. GRUB), dieser lädt Kernel und initramfs, und der Kernel startet systemd (PID 1).' },
+            { type: 'SC', id: 18, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'Boot-Reihenfolge (vereinfacht, Start → Login):', options: ['Bootloader → Firmware → Kernel → systemd', 'Firmware → Bootloader → Kernel+initramfs → systemd', 'Firmware → Kernel → Bootloader → systemd', 'Kernel → Firmware → Bootloader → systemd'], correct: 1, explanation: 'Die Firmware (BIOS/UEFI) startet die Bootloader (z.B. GRUB), dieser lädt Kernel und initramfs, und der Kernel startet systemd (PID 1).' },
             { type: 'SC', id: 19, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'initramfs dient …', options: ['GUI-Treiber laden', 'temporäres Root im RAM, frühe Treiber & Mount', 'Logrotation beim Boot', 'Timesync'], correct: 1, explanation: 'Die initial ramdisk (initramfs) ist ein kleines, temporäres Root-Dateisystem, um früh im Boot-Prozess notwendige Treiber (z.B. für Festplatten) zu laden.' },
             { type: 'SC', id: 20, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'systemctl isolate multi-user.target …', options: ['fährt herunter', 'wechselt in Mehrbenutzer ohne GUI', 'aktiviert Autologin', 'löscht Dienste'], correct: 1, explanation: 'multi-user.target ist der Zustand ohne grafische Oberfläche. isolate wechselt den Systemzustand auf dieses Target.' },
             { type: 'SC', id: 21, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'Richtige Zuordnung: graphical.target ≈ Runlevel …', options: ['1', '3', '5', '6'], correct: 2, explanation: 'graphical.target entspricht dem alten Runlevel 5 (Vollständiger Multi-User-Modus mit GUI).' },
@@ -547,7 +177,6 @@
             { type: 'SC', id: 43, category: 'os-kernel', categoryName: 'OS: Kernel & Abstraktion', question: 'pstree -p zeigt …', options: ['Dateirechte', 'Prozessbaum mit PIDs', 'Kernel-Module', 'Targets'], correct: 1, explanation: 'pstree zeigt die Prozesse hierarchisch (als Baum), -p fügt die PIDs hinzu.' },
             { type: 'SC', id: 44, category: 'boot-systemd', categoryName: 'Boot & systemd', question: 'systemd-timesyncd konfiguriert man in …', options: ['/etc/systemd/timesyncd.conf', '/etc/ntp.conf', '/etc/default/timesync', '/var/lib/systemd/timesyncd'], correct: 0, explanation: 'Die Konfigurationen für systemd-Dienste liegen typischerweise unter /etc/systemd.' },
             { type: 'MC', id: 45, category: 'cloud-basics', categoryName: 'Cloud & Switch Engines', question: 'Switch Engines – Praxis (aus deinen Notizen):', options: ['Instanzen im Internet werden sofort angegriffen → restriktive SGs', 'Floating IP zwingend für externen Zugriff', 'Volumes überleben VM-Löschung automatisch in jedem Fall', 'Privaten SSH-Key nie hochladen', 'SSH-Key-Pair statt Passwort'], correct: [0, 1, 3, 4], explanation: 'C ist falsch: Man muss "Delete Volume on Instance Delete" explizit auf "No" setzen, damit das Volume überlebt. Floating IP ist zwingend für externen Zugriff.' },
-            
             // TEIL B - Richtig/Falsch (RF)
             { type: 'RF', id: 46, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) apt full-upgrade ist Synonym zu apt dist-upgrade.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. apt full-upgrade ist der modernere, empfohlene Alias für apt dist-upgrade.' },
             { type: 'RF', id: 47, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) ls -la zeigt auch versteckte Dateien.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. -a bedeutet "all", es werden auch Dateien mit einem Punkt (.) am Anfang angezeigt.' },
@@ -559,7 +188,6 @@
             { type: 'RF', id: 53, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) uname -r zeigt die Kernel-Version.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. -r steht für "kernel-release".' },
             { type: 'RF', id: 54, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) journalctl -b zeigt Logs seit letztem Boot.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. -b steht für "boot".' },
             { type: 'RF', id: 55, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: '(R/F) chmod 600 ~/.ssh/id_rsa ist für SSH verpflichtend.', options: ['Richtig', 'Falsch'], correct: 0, explanation: 'Richtig. SSH ist sehr strikt bei den Rechten des privaten Schlüssels.' },
-
             // TEIL C - Lückentext (FTB)
             { type: 'FTB', id: 56, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'Boot-Kette: (1) _______ → Bootloader → (2) _______(+initramfs) → (3) _______ (PID 1).', correct: ['Firmware/BIOS/UEFI', 'Kernel', 'systemd'], placeholder: ['(1) Firmware-Typ', '(2) Komponente', '(3) Init-System'], explanation: 'Die Kette ist: Firmware/BIOS/UEFI → Bootloader (z.B. GRUB) → Kernel (+initramfs) → systemd (PID 1).' },
             { type: 'FTB', id: 57, category: 'mixed', categoryName: 'Richtig/Falsch & Lückentext', question: 'df -h zeigt freien Speicher pro (1) _______, du -h die Nutzung pro (2) _______.', correct: ['Dateisystem', 'Datei/Verzeichnis'], placeholder: ['(1) Einheit', '(2) Einheit'], explanation: 'df (Disk Free) zeigt Dateisystem-Statistiken (vom Superblock), du (Disk Usage) muss alle Dateien/Verzeichnisse durchzählen.' },
@@ -574,11 +202,10 @@
         ];
 
         let currentQuestionIndex = 0;
-        let userAnswers = {}; // Speichert die Antworten des Benutzers
-        let filteredQuestions = []; // Speichert die aktuell gefilterten Fragen
+        let userAnswers = {};
+        let filteredQuestions = [];
         let currentCategory = 'all';
 
-        // Hilfsfunktion zum Mischen eines Arrays
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -586,7 +213,6 @@
             }
         }
 
-        // Bereitet die Fragen für die Anzeige vor (initial und nach Kategoriewechsel)
         function initializeQuiz(category) {
             currentCategory = category;
             if (category === 'all') {
@@ -594,13 +220,8 @@
             } else {
                 filteredQuestions = questionsData.filter(q => q.category === category);
             }
-            // Optional: Fragen mischen, wenn alle Fragen ausgewählt sind.
-            // shuffleArray(filteredQuestions);
-            
-            // Setze den Index auf 0 zurück, falls die aktuelle Frage in der neuen Kategorie nicht existiert
-            if (currentQuestionIndex >= filteredQuestions.length) {
-                currentQuestionIndex = 0;
-            }
+            if (currentQuestionIndex >= filteredQuestions.length) currentQuestionIndex = 0;
+
             if (filteredQuestions.length === 0) {
                 document.getElementById('quizContainer').innerHTML = '<p style="text-align: center; margin-top: 50px; font-size: 1.2em;">Keine Fragen in dieser Kategorie.</p>';
                 document.getElementById('prevBtn').style.display = 'none';
@@ -610,24 +231,26 @@
                 updateProgress();
                 return;
             }
-
             renderQuestion();
             updateProgress();
             updateNavigationButtons();
         }
 
-        // Aktualisiert die Anzeige des Fortschritts
         function updateProgress() {
             const totalQuestions = filteredQuestions.length;
-            const answeredQuestions = Object.keys(userAnswers).filter(id => {
-                const q = questionsData.find(qd => qd.id == id);
-                return q && (q.category === currentCategory || currentCategory === 'all') && userAnswers[id] !== undefined;
-            }).length;
 
-            const correctCount = Object.values(userAnswers).filter(a => a.isCorrect).length;
-            const wrongCount = Object.values(userAnswers).filter(a => a.isAnswered && !a.isCorrect).length;
+            // Antworten nur aus der aktuellen Filterliste
+            const inScopeIds = new Set(filteredQuestions.map(q => String(q.id)));
+            const answersInScope = Object.keys(userAnswers)
+                .filter(id => inScopeIds.has(String(id)) && userAnswers[id])
+                .map(id => userAnswers[id]);
+
+            const answeredQuestions = answersInScope.filter(a => a.isAnswered).length;
+            const correctCount = answersInScope.filter(a => a.isCorrect).length;
+            const wrongCount = answersInScope.filter(a => a.isAnswered && !a.isCorrect).length;
+
             const successRate = answeredQuestions > 0 ? ((correctCount / answeredQuestions) * 100).toFixed(0) : 0;
-            const progress = (answeredQuestions / totalQuestions) * 100 || 0;
+            const progress = (answeredQuestions / (totalQuestions || 1)) * 100;
 
             document.getElementById('progressFill').style.width = `${progress}%`;
             document.getElementById('progressFill').textContent = `${progress.toFixed(0)}%`;
@@ -643,18 +266,17 @@
             }
         }
 
-        // Rendert die aktuelle Frage
         function renderQuestion() {
             const questionContainer = document.getElementById('quizContainer');
             if (filteredQuestions.length === 0) return;
 
             const question = filteredQuestions[currentQuestionIndex];
-            const isAnswered = userAnswers[question.id] && userAnswers[question.id].isAnswered;
-            const currentAnswer = userAnswers[question.id] ? userAnswers[question.id].selection : null;
+            const userAnswerObj = userAnswers[question.id];
+            const isAnswered = !!(userAnswerObj && userAnswerObj.isAnswered);
+            const currentAnswer = userAnswerObj ? userAnswerObj.selection : null;
 
             let optionsHtml = '';
-            
-            // SC, MC und R/F Fragen
+
             if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
                 optionsHtml = question.options.map((option, index) => {
                     const isSelected = Array.isArray(currentAnswer) ? currentAnswer.includes(index) : currentAnswer === index;
@@ -662,11 +284,9 @@
                     const isWrongSelection = isSelected && isAnswered && !isCorrect;
                     const optionClass = isSelected ? 'selected' : '';
                     const resultClass = isAnswered ? (isCorrect ? 'correct' : (isWrongSelection ? 'wrong' : '')) : '';
-                    
-                    let letter = String.fromCharCode(65 + index); // A, B, C, D...
-
+                    const letter = String.fromCharCode(65 + index); // A, B, C, ...
                     return `
-                        <div class="option ${optionClass} ${resultClass}" data-index="${index}" data-correct="${isCorrect}">
+                        <div class="option ${optionClass} ${resultClass}" data-index="${index}">
                             <div class="option-letter">${letter}</div>
                             <span>${option}</span>
                             ${question.type === 'MC' && !isAnswered ? `<input type="checkbox" class="option-checkbox" ${isSelected ? 'checked' : ''} />` : ''}
@@ -675,8 +295,6 @@
                         </div>
                     `;
                 }).join('');
-
-            // Lückentext Fragen
             } else if (question.type === 'FTB') {
                 optionsHtml = '<div class="fill-in-the-blank-container">';
                 const numBlanks = question.correct.length;
@@ -684,23 +302,20 @@
                     const value = currentAnswer && currentAnswer[i] !== undefined ? currentAnswer[i] : '';
                     const placeholder = question.placeholder ? question.placeholder[i] : `Lücke ${i + 1}`;
                     let inputClass = 'fill-in-the-blank-input';
-                    
                     if (isAnswered) {
-                        const isBlankCorrect = userAnswers[question.id].correctBlanks[i];
+                        const isBlankCorrect = userAnswerObj.correctBlanks[i];
                         inputClass += isBlankCorrect ? ' correct-answer' : ' wrong-answer';
                     }
-
                     optionsHtml += `
                         <div class="fill-in-the-blank-wrapper">
                             <label for="ftb-${i}" class="fill-in-the-blank-label">${placeholder}:</label>
-                            <input type="text" id="ftb-${i}" data-index="${i}" class="${inputClass}" value="${value}" ${isAnswered ? 'disabled' : ''}>
+                            <input type="text" id="ftb-${i}" data-index="${i}" class="${inputClass}" value="${value.replace(/"/g,'&quot;')}" ${isAnswered ? 'disabled' : ''}>
                         </div>
                     `;
                 }
                 optionsHtml += '</div>';
             }
 
-            // Gesamtes Question Card HTML
             questionContainer.innerHTML = `
                 <div class="question-card fade-in" id="q-${question.id}">
                     <div class="question-header">
@@ -712,37 +327,40 @@
                     <div class="answer-section ${isAnswered ? 'show' : 'hide'}" id="answer-q-${question.id}">
                         <div class="answer-header">Lösung:</div>
                         <div class="answer-text">
-                            ${getAnswerExplanation(question, userAnswers[question.id])}
+                            ${isAnswered ? getAnswerExplanation(question, userAnswerObj) : ''}
                             ${question.explanation ? `<p style="margin-top: 10px; font-style: italic;">Erklärung: ${question.explanation}</p>` : ''}
                         </div>
                     </div>
                 </div>
             `;
-            
-            // Event Listener für Auswahlfragen (SC/MC/RF)
+
             if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
                 document.querySelectorAll('.option').forEach(optionElement => {
-                    if (!isAnswered) { // Nur klickbar, wenn noch nicht beantwortet
+                    if (!isAnswered) {
                         optionElement.addEventListener('click', () => handleOptionClick(question, optionElement));
                     }
                 });
             }
 
             updateNavigationButtons();
-            
-            // Check-Answer Button Logik
-            document.getElementById('checkAnswerBtn').onclick = () => checkAnswer(question);
-            document.getElementById('checkAnswerBtn').style.display = isAnswered ? 'none' : 'inline-block';
+            const checkBtn = document.getElementById('checkAnswerBtn');
+            checkBtn.onclick = () => checkAnswer(question);
+            checkBtn.style.display = isAnswered ? 'none' : 'inline-block';
         }
 
-        // Generiert die Erklärung/Lösung für die Antwortsektion
         function getAnswerExplanation(question, userAnswer) {
-            if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
-                let correctOptions = Array.isArray(question.correct) ? question.correct : [question.correct];
-                let correctLetters = correctOptions.map(i => String.fromCharCode(65 + i)).join(', ');
-                let userLetters = Array.isArray(userAnswer.selection) ? userAnswer.selection.map(i => String.fromCharCode(65 + i)).join(', ') : (userAnswer.selection !== null ? String.fromCharCode(65 + userAnswer.selection + 65) : 'N/A');
+            if (!userAnswer) return ''; // Guard
 
-                let status = userAnswer.isCorrect ? '<span style="color: #28a745; font-weight: bold;">RICHTIG!</span>' : '<span style="color: #dc3545; font-weight: bold;">FALSCH.</span>';
+            if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
+                const correctOptions = Array.isArray(question.correct) ? question.correct : [question.correct];
+                const correctLetters = correctOptions.map(i => String.fromCharCode(65 + i)).join(', ');
+                const userLetters = Array.isArray(userAnswer.selection)
+                    ? userAnswer.selection.map(i => String.fromCharCode(65 + i)).join(', ')
+                    : (userAnswer.selection !== null ? String.fromCharCode(65 + userAnswer.selection) : 'N/A');
+
+                const status = userAnswer.isCorrect
+                    ? '<span style="color: #28a745; font-weight: bold;">RICHTIG!</span>'
+                    : '<span style="color: #dc3545; font-weight: bold;">FALSCH.</span>';
 
                 return `
                     <p>Status: ${status}</p>
@@ -750,11 +368,13 @@
                     <p>Korrekte Option(en): ${correctLetters} (${correctOptions.map(i => question.options[i]).join('; ')})</p>
                 `;
             } else if (question.type === 'FTB') {
-                let html = userAnswer.isCorrect ? '<p style="color: #28a745; font-weight: bold;">RICHTIG!</p>' : '<p style="color: #dc3545; font-weight: bold;">FALSCH.</p>';
+                let html = userAnswer.isCorrect
+                    ? '<p style="color: #28a745; font-weight: bold;">RICHTIG!</p>'
+                    : '<p style="color: #dc3545; font-weight: bold;">FALSCH.</p>';
                 html += '<table><thead><tr><th>Lücke</th><th>Ihre Antwort</th><th>Korrekte Antwort</th></tr></thead><tbody>';
 
                 for (let i = 0; i < question.correct.length; i++) {
-                    const userVal = userAnswer.selection[i] || '';
+                    const userVal = (userAnswer.selection[i] || '');
                     const correctVal = Array.isArray(question.correct[i]) ? question.correct[i].join(' ODER ') : question.correct[i];
                     const statusIcon = userAnswer.correctBlanks[i] ? '✅' : '❌';
                     const placeholderText = question.placeholder ? question.placeholder[i] : `Lücke ${i+1}`;
@@ -763,109 +383,91 @@
                 html += '</tbody></table>';
                 return html;
             }
+            return '';
         }
 
-
-        // Behandelt Klicks auf Optionen (Auswahlfragen)
         function handleOptionClick(question, optionElement) {
             const index = parseInt(optionElement.getAttribute('data-index'));
             const options = document.querySelectorAll('.option');
-            let currentSelection = userAnswers[question.id] && userAnswers[question.id].selection ? userAnswers[question.id].selection : (question.type === 'MC' ? [] : null);
-            
-            // Wenn es eine Single Choice (SC/RF) ist, entferne alle Selektionen
+            let currentSelection = (userAnswers[question.id] && userAnswers[question.id].selection)
+                ? (Array.isArray(userAnswers[question.id].selection) ? [...userAnswers[question.id].selection] : userAnswers[question.id].selection)
+                : (question.type === 'MC' ? [] : null);
+
             if (question.type === 'SC' || question.type === 'RF') {
                 options.forEach(opt => opt.classList.remove('selected'));
                 currentSelection = index;
                 optionElement.classList.add('selected');
-            } 
-            // Wenn es eine Multiple Choice (MC) ist
-            else if (question.type === 'MC') {
+            } else if (question.type === 'MC') {
+                if (!Array.isArray(currentSelection)) currentSelection = [];
                 if (optionElement.classList.contains('selected')) {
                     optionElement.classList.remove('selected');
                     const idxToRemove = currentSelection.indexOf(index);
-                    if (idxToRemove > -1) {
-                        currentSelection.splice(idxToRemove, 1);
-                    }
+                    if (idxToRemove > -1) currentSelection.splice(idxToRemove, 1);
                 } else {
                     optionElement.classList.add('selected');
-                    currentSelection.push(index);
+                    if (!currentSelection.includes(index)) currentSelection.push(index);
                 }
             }
 
-            // Speichere die aktuelle Auswahl VOR der finalen Überprüfung
             userAnswers[question.id] = { selection: currentSelection, isAnswered: false, isCorrect: false };
             updateProgress();
         }
 
-        // Überprüft die Antwort
         function checkAnswer(question) {
-            if (userAnswers[question.id] && userAnswers[question.id].isAnswered) return; // Schon beantwortet
-            
+            if (userAnswers[question.id] && userAnswers[question.id].isAnswered) return;
+
             let isCorrect = false;
             let currentSelection = null;
             let correctBlanks = [];
 
-            // SC/MC/RF
             if (question.type === 'SC' || question.type === 'MC' || question.type === 'RF') {
                 const selectedOptions = Array.from(document.querySelectorAll('.option.selected')).map(el => parseInt(el.getAttribute('data-index')));
-                currentSelection = question.type === 'SC' || question.type === 'RF' ? (selectedOptions.length > 0 ? selectedOptions[0] : null) : selectedOptions;
+                currentSelection = (question.type === 'SC' || question.type === 'RF')
+                    ? (selectedOptions.length > 0 ? selectedOptions[0] : null)
+                    : selectedOptions;
 
                 if (question.type === 'SC' || question.type === 'RF') {
                     isCorrect = currentSelection === question.correct;
                 } else { // MC
                     const correctAnswers = question.correct;
-                    // Überprüfung: Hat der Nutzer genau die richtigen Antworten gewählt?
-                    isCorrect = selectedOptions.length === correctAnswers.length && 
+                    isCorrect = selectedOptions.length === correctAnswers.length &&
                                 selectedOptions.every(val => correctAnswers.includes(val));
                 }
-            } 
-            // FTB
-            else if (question.type === 'FTB') {
+            } else if (question.type === 'FTB') {
                 const inputs = Array.from(document.querySelectorAll('.fill-in-the-blank-input'));
                 currentSelection = inputs.map(input => input.value.trim());
-
                 let allBlanksCorrect = true;
-                correctBlanks = currentSelection.map((userAnswer, index) => {
+                correctBlanks = currentSelection.map((userAns, index) => {
                     const correctAnswers = Array.isArray(question.correct[index]) ? question.correct[index] : [question.correct[index]];
-                    const match = correctAnswers.some(correctAnswer => userAnswer.toLowerCase() === correctAnswer.toLowerCase());
+                    const match = correctAnswers.some(correctAnswer => userAns.toLowerCase() === String(correctAnswer).toLowerCase());
                     if (!match) allBlanksCorrect = false;
                     return match;
                 });
                 isCorrect = allBlanksCorrect;
             }
 
-
-            // Speichere das Ergebnis
             userAnswers[question.id] = {
                 selection: currentSelection,
                 isAnswered: true,
                 isCorrect: isCorrect,
-                correctBlanks: correctBlanks // Nur für FTB relevant
+                correctBlanks: correctBlanks
             };
 
-            // Re-render, um die Lösung anzuzeigen
             renderQuestion();
             updateProgress();
         }
 
-        // Aktualisiert die Anzeige der Navigationsbuttons
         function updateNavigationButtons() {
             const total = filteredQuestions.length;
 
             document.getElementById('prevBtn').style.display = currentQuestionIndex > 0 ? 'inline-block' : 'none';
             document.getElementById('nextBtn').style.display = currentQuestionIndex < total - 1 ? 'inline-block' : 'none';
 
-            // Wenn es die letzte Frage ist und alle Fragen beantwortet sind
-            const answeredCount = Object.keys(userAnswers).filter(id => {
-                const q = questionsData.find(qd => qd.id == id);
-                return q && (q.category === currentCategory || currentCategory === 'all') && userAnswers[id] && userAnswers[id].isAnswered;
-            }).length;
+            const answeredCount = Object.keys(userAnswers)
+                .filter(id => filteredQuestions.some(q => String(q.id) === String(id)) && userAnswers[id] && userAnswers[id].isAnswered)
+                .length;
 
-            if (currentQuestionIndex === total - 1 && answeredCount === total) {
-                 document.getElementById('finishBtn').style.display = 'inline-block';
-                 document.getElementById('nextBtn').style.display = 'none';
-            } else if (currentQuestionIndex === total - 1 && answeredCount < total) {
-                // Letzte Frage, noch nicht alle beantwortet
+            if (currentQuestionIndex === total - 1 && total > 0) {
                 document.getElementById('finishBtn').style.display = 'inline-block';
                 document.getElementById('nextBtn').style.display = 'none';
             } else {
@@ -873,7 +475,6 @@
             }
         }
 
-        // Navigations-Logik
         document.getElementById('prevBtn').addEventListener('click', () => {
             if (currentQuestionIndex > 0) {
                 currentQuestionIndex--;
@@ -889,31 +490,26 @@
         });
 
         document.getElementById('finishBtn').addEventListener('click', () => {
-            // Zeige die Zusammenfassung
             showResults();
         });
 
-
-        // Rendert die Ergebnisübersicht
         function showResults() {
             const totalQuestions = filteredQuestions.length;
-            const correctCount = Object.keys(userAnswers).filter(id => {
-                const q = questionsData.find(qd => qd.id == id);
-                return q && (q.category === currentCategory || currentCategory === 'all') && userAnswers[id] && userAnswers[id].isCorrect;
-            }).length;
-            
-            const answeredCount = Object.keys(userAnswers).filter(id => {
-                const q = questionsData.find(qd => qd.id == id);
-                return q && (q.category === currentCategory || currentCategory === 'all') && userAnswers[id] && userAnswers[id].isAnswered;
-            }).length;
 
-            const score = (correctCount / totalQuestions) * 100;
-            const passed = score >= 50; // Einfache 50%-Regel
+            const inScopeIds = new Set(filteredQuestions.map(q => String(q.id)));
+            const answersInScope = Object.keys(userAnswers)
+                .filter(id => inScopeIds.has(String(id)) && userAnswers[id]);
+
+            const correctCount = answersInScope.filter(id => userAnswers[id].isCorrect).length;
+            const answeredCount = answersInScope.filter(id => userAnswers[id].isAnswered).length;
+
+            const score = (correctCount / (totalQuestions || 1)) * 100;
+            const passed = score >= 50;
 
             document.querySelector('.quiz-content').innerHTML = `
                 <div class="result-summary fade-in">
                     <h2>${passed ? 'Glückwunsch! Bestanden! 🎉' : 'Weiter Üben... 😥'}</h2>
-                    <p>Sie haben das Quiz in der Kategorie <strong>"${document.querySelector('.category-btn.active').textContent}"</strong> abgeschlossen.</p>
+                    <p>Sie haben das Quiz in der Kategorie <strong>"${document.querySelector('.category-btn.active')?.textContent || 'Aktuelle Auswahl'}"</strong> abgeschlossen.</p>
                     <div class="result-score">${correctCount}/${totalQuestions}</div>
                     <p>Erfolgsrate: <strong>${score.toFixed(0)}%</strong></p>
 
@@ -942,49 +538,45 @@
                     </div>
                 </div>
             `;
-            document.querySelector('.button-group').style.display = 'none'; // Verstecke die alten Nav-Buttons
+            // Hinweis: KEIN .button-group verstecken – sonst verschwinden die neuen Buttons!
         }
 
-        // Logik zum Einsehen der Antworten nach Abschluss des Quiz (optional)
         function reviewAnswers() {
-            // Setze den Index zurück und re-initialisiere, um alle Fragen anzuzeigen
             currentQuestionIndex = 0;
             initializeQuiz(currentCategory);
-            document.getElementById('checkAnswerBtn').style.display = 'none'; // Verstecke den Check-Button
+            document.getElementById('checkAnswerBtn').style.display = 'none';
             document.getElementById('finishBtn').style.display = 'none';
         }
-        
-        // Dynamische Generierung der Kategorien-Buttons
+
         function setupCategories() {
-            const categories = questionsData.reduce((acc, q) => {
+            // Anzahl Fragen pro Kategorie dynamisch ermitteln
+            const categoriesCount = questionsData.reduce((acc, q) => {
                 acc[q.category] = (acc[q.category] || 0) + 1;
                 return acc;
             }, {});
 
             const categorySelector = document.getElementById('categorySelector');
             let html = `<button class="category-btn active" data-category="all">Alle Fragen (${questionsData.length})</button>`;
-            
-            // Definiere sichtbare Namen für die Kategorien
-            const categoryNames = {
-                'os-kernel': 'OS: Kernel/Abstraktion (7)',
-                'paket-management': 'Paket-Management (3)',
-                'filesystem-cli': 'Dateisystem/CLI (6)',
-                'ssh-security': 'SSH/Sicherheit (1)',
-                'cloud-basics': 'Cloud/SE Basics (5)',
-                'boot-systemd': 'Boot/systemd (8)',
-                'user-rights': 'User-Rechte/Links (4)',
-                'mixed': 'Bonus (20) R/F & Lückentext' 
+
+            const nameBase = {
+                'os-kernel': 'OS: Kernel/Abstraktion',
+                'paket-management': 'Paket-Management',
+                'filesystem-cli': 'Dateisystem/CLI',
+                'ssh-security': 'SSH/Sicherheit',
+                'cloud-basics': 'Cloud/SE Basics',
+                'boot-systemd': 'Boot/systemd',
+                'user-rights': 'User-Rechte/Links',
+                'mixed': 'Bonus R/F & Lückentext'
             };
-            
-            // Filtere die Hauptkategorien, um die Reihenfolge beizubehalten
+
             const orderedCategories = [
-                'os-kernel', 'paket-management', 'filesystem-cli', 
+                'os-kernel', 'paket-management', 'filesystem-cli',
                 'ssh-security', 'cloud-basics', 'boot-systemd', 'user-rights', 'mixed'
             ];
 
             orderedCategories.forEach(cat => {
-                if (categories[cat]) {
-                    const name = categoryNames[cat] || cat;
+                if (categoriesCount[cat]) {
+                    const name = `${nameBase[cat] || cat} (${categoriesCount[cat]})`;
                     html += `<button class="category-btn" data-category="${cat}">${name}</button>`;
                 }
             });
@@ -995,20 +587,17 @@
                 btn.addEventListener('click', (e) => {
                     document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
-                    currentQuestionIndex = 0; // Setze den Index beim Wechsel zurück
-                    userAnswers = {}; // Setze Antworten zurück beim Kategoriewechsel
+                    currentQuestionIndex = 0;
+                    userAnswers = {}; // Antworten zurücksetzen beim Kategoriewechsel
                     initializeQuiz(e.target.getAttribute('data-category'));
                 });
             });
         }
 
-
-        // Startet das Quiz beim Laden der Seite
         document.addEventListener('DOMContentLoaded', () => {
             setupCategories();
             initializeQuiz('all');
         });
-
     </script>
 </body>
 </html>
